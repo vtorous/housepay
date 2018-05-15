@@ -1,0 +1,32 @@
+<div class="container bg-white">
+    <div class="row">
+        <div class="col pt-4 pb-1">
+            <h1 class="pageheader d-inline-block">History</h1>
+            <select (change)="onChange()"
+                    [(ngModel)]="currentYear"
+                    class="form-control form-control-lg form-control-plaintext d-inline-block w-auto">
+                <option *ngFor="let year of yearsList"
+                    [selected]="year == currentYear">{{year}}</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="container bg-white">
+    <div class="row">
+
+
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 my-3"
+             *ngFor="let month of monthList">
+
+             <app-month-history-detail
+                [month]="month"
+                [year]="currentYear"
+                [curencyString] = "curencyString">
+            </app-month-history-detail>
+
+        </div>
+       
+    </div>
+</div>
+ 

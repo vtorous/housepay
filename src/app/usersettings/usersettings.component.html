@@ -1,0 +1,49 @@
+<div class="container bg-white">
+    <div class="row">
+        <div class="col pt-4 pb-1">
+            <h1 class="pageheader">Setings</h1>
+
+            <form class="mb-3">
+                <div class="form-row">
+                    <div class="col-12 mt-4">
+                        <h5>General settings</h5>
+                        <hr>
+                    </div>
+                    <label for="xxx" class="col-4 col-md-3 col-form-label">Begin counting</label>
+                    <div class="col">
+                        <select class="form-control custom-select w-auto" id="inlineFormCustomSelect">
+                            <option *ngFor="let year of settingYearList"
+                                    [selected]="year == userSettings.beginYear">{{year}}</option>
+
+                        </select>
+                        <select class="form-control custom-select w-auto" id="inlineFormCustomSelect">
+                            <option *ngFor="let month of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]"
+                                     [selected]="month == userSettings.beginMonth">{{month | month}}</option>
+                        </select>
+                    </div>
+                    <div class="col-12 mt-4">
+                        <h5>Services</h5>
+                        <hr>
+                    </div>
+
+                </div>
+                <div class="row" *ngFor="let serv of userSettings.services">
+                    <label for="servicename1" class="col-md-3 col-form-label">Service name</label>
+                    <div class="col-md-9 mb-1">
+                        <input type="text" class="form-control" id="servicename1" value="{{serv.name}}">
+                    </div>
+                    <label *ngIf="serv.pricePerUnit" for="serviceprice1" class="col-md-3 col-form-label">Price per unit</label>
+                    <div *ngIf="serv.pricePerUnit" class="col-md-9 mb-1">
+                        <input type="text" class="form-control" id="serviceprice1" value="{{serv.pricePerUnit}}">
+                    </div>
+                    <label *ngIf="serv.firstValue" for="servicementer1" class="col-md-3 col-form-label">Start meter value</label>
+                    <div *ngIf="serv.firstValue" class="col-md-9 mb-4">
+                        <input type="text" class="form-control" id="servicemeter1" value="{{serv.firstValue}}">
+                    </div>
+
+                    <div class="col-12">  <hr class="pt-1 pb-1"> </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
