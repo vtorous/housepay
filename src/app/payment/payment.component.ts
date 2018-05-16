@@ -21,8 +21,10 @@ export class PaymentComponent implements OnInit {
   constructor(private datesService: DatesService) { }
 
   ngOnInit() {
-    this.yearsList = this.datesService.getYearsList();
-    console.log(this.yearsList);
+    this.datesService.getYearsList().subscribe(yearsList => {this.yearsList = yearsList;
+      console.log(this.yearsList);
+      console.log("onInit paymentComponent is running");
+    });
   }
 
 }

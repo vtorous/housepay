@@ -4,6 +4,8 @@ import { AppComponent } from '../app.component';
 import { Payment, PaymentByCounter, } from '../../month-payment';
 import { PaymentService } from '../payment.service';
 import { DatesService } from '../dates.service';
+import { Observable, timer } from 'rxjs';
+import { timeout } from 'rxjs/operators';
 
 
 @Component({
@@ -34,7 +36,9 @@ export class HistoryComponent implements OnInit {
     
   //----------------------------------------------------------------------------------------------
   getPayments(): void {
-    this.payments = this.paymentService.getPayments();
+    this.paymentService.getPayments().subscribe(
+        payments => {this.payments = payments; console.log(" adkjsf asdkfj ffklj"+ this.payments);
+    });
   } 
   
   //----------------------------------------------------------------------------------------------
@@ -43,15 +47,21 @@ export class HistoryComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("ngOnInit is running....");
-
+   
+    console.log("History onInit is runiing");
     this.currentMonth = this.date.getMonth();
     this.currentYear = this.date.getFullYear();
   
-    this.yearsList = this.datesService.getYearsList();
-    this.monthList = this.datesService.getMonthList(this.currentYear);
+    this.datesService.getYearsList().subscribe(yearsList => {this.yearsList = yearsList;
+      console.log(this.yearsList);
+    });
+    
+    
+    // this.datesService.getYearsList();
+    // this.datesService.getYearsList();
+    // this.monthList = this.datesService.getMonthList(this.currentYear);
 
-    this.curencyString = this.paymentService.getCurencyString();  
+    // this.curencyString = this.paymentService.getCurencyString();  
   }
 
 }

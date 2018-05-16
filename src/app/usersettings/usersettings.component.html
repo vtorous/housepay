@@ -12,7 +12,7 @@
                     <label for="xxx" class="col-4 col-md-3 col-form-label">Begin counting</label>
                     <div class="col">
                         <select class="form-control custom-select w-auto" id="inlineFormCustomSelect">
-                            <option *ngFor="let year of settingYearList"
+                            <option *ngFor="let year of previousYearsList"
                                     [selected]="year == userSettings.beginYear">{{year}}</option>
 
                         </select>
@@ -42,6 +42,13 @@
                     </div>
 
                     <div class="col-12">  <hr class="pt-1 pb-1"> </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col">
+                        <button type="button" class="btn btn-secondary">Save setting</button>
+                        <br>
+                    </div>
                 </div>
             </form>
         </div>

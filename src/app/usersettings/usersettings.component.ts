@@ -18,7 +18,7 @@ export class UsersettingsComponent implements OnInit {
   currentMonth: number;
   currentYear: number; 
   
-  settingYearList: number[] = [];
+  previousYearsList: number[] = [];
 
   date: Date = new Date();
 
@@ -26,19 +26,19 @@ export class UsersettingsComponent implements OnInit {
               private datesService: DatesService) { }
 
   ngOnInit() {
-    this.userSettings = this.usersettingService.getUserSettings();
+    this.usersettingService.getUserSettings().subscribe(userSettings => this.userSettings = userSettings);
 
     this.currentMonth = this.date.getMonth();
     this.currentYear = this.date.getFullYear();
 
-    this.settingYearList = this.getSettingYearList();
+    this.previousYearsList = this.getPreviousYearsList(4);
 
     console.log(this.currentYear, this.currentMonth);
   }
   
-  getSettingYearList() {
+  getPreviousYearsList(n: number) {
     let tempArray: number[] = [];
-    for (let i = 0; i < 5; i++ ) {
+    for (let i = 0; i < n; i++ ) {
       tempArray[i] = this.currentYear - i;
       console.log(tempArray);
       console.log(this.currentYear)
@@ -46,5 +46,7 @@ export class UsersettingsComponent implements OnInit {
     
     return tempArray;
   }
+
+
 
 }
