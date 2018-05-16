@@ -4,7 +4,6 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { PAYMENTS } from '../month-payment-mockup';
 import { Payment, PaymentByCounter, } from '../month-payment';
 
 @Injectable()
@@ -22,8 +21,6 @@ export class PaymentService {
     );
     
   }
-
-
 
   /**
  * Handle Http operation that failed.

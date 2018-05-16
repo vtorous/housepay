@@ -14,7 +14,6 @@
                         <select class="form-control custom-select w-auto" id="inlineFormCustomSelect">
                             <option *ngFor="let year of previousYearsList"
                                     [selected]="year == userSettings.beginYear">{{year}}</option>
-
                         </select>
                         <select class="form-control custom-select w-auto" id="inlineFormCustomSelect">
                             <option *ngFor="let month of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]"
@@ -25,7 +24,6 @@
                         <h5>Services</h5>
                         <hr>
                     </div>
-
                 </div>
                 <div class="row" *ngFor="let serv of userSettings.services">
                     <label for="servicename1" class="col-md-3 col-form-label">Service name</label>
