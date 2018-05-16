@@ -1,0 +1,14 @@
+  <ul class="list-group month-stats">
+      
+      <li class="list-group-item text-large text-white bg-secondary"><strong>{{month | month}} </strong>{{year}}</li>
+      <li class="list-group-item" *ngFor="let key of monthHistory">
+          <span class="ml-2">{{key.service}}</span>
+          <span class="float-right"><strong>{{key.sum | number:'.2' }}</strong> {{curencyString}}</span>
+      </li>
+
+      <li class="list-group-item bg-light">
+          <span><strong>Total</strong></span>
+          <span class="float-right text-large"><strong>{{totalMonthSum | number:'.2'}}</strong> {{curencyString}}</span>
+      </li>
+  </ul>
+
