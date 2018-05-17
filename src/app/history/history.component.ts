@@ -4,8 +4,7 @@ import { AppComponent } from '../app.component';
 import { Payment, PaymentByCounter, } from '../../month-payment';
 import { PaymentService } from '../payment.service';
 import { DatesService } from '../dates.service';
-import { Observable, timer } from 'rxjs';
-import { timeout } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 
 @Component({
@@ -21,8 +20,8 @@ export class HistoryComponent implements OnInit {
   payments: (Payment|PaymentByCounter)[];
   curencyString: string;
 
-  yearsList: number[];
-  monthList: number[];
+  yearsList: number[] = [];
+  monthList: number[] = [];
   
   date: Date = new Date();
   
@@ -36,32 +35,36 @@ export class HistoryComponent implements OnInit {
     
   //----------------------------------------------------------------------------------------------
   getPayments(): void {
-    this.paymentService.getPayments().subscribe(
-        payments => {this.payments = payments; console.log(" adkjsf asdkfj ffklj"+ this.payments);
-    });
+    this.paymentService.getPayments().subscribe(payments => this.payments = payments);
   } 
   
   //----------------------------------------------------------------------------------------------
   onChange(): void {
-    this.monthList = this.datesService.getMonthList(this.currentYear);
+    this.datesService.getMonthList(this.currentYear).subscribe(monthList => {this.monthList = monthList;
+      // console.log(this.monthList);
+    });
   }
 
+
+// ----------------------------------------------------------------------------  
   ngOnInit() {
-   
-    console.log("History onInit is runiing");
     this.currentMonth = this.date.getMonth();
     this.currentYear = this.date.getFullYear();
-  
+
+    this.getPayments();
+
+    console.log("History onInit is runiing");
+    // console.log(this.payments);
+        
     this.datesService.getYearsList().subscribe(yearsList => {this.yearsList = yearsList;
-      console.log(this.yearsList);
+      // console.log(this.yearsList);
+    });
+
+    this.datesService.getMonthList(this.currentYear).subscribe(monthList => {this.monthList = monthList;
+      // console.log(this.monthList);
     });
     
-    
-    // this.datesService.getYearsList();
-    // this.datesService.getYearsList();
-    // this.monthList = this.datesService.getMonthList(this.currentYear);
-
-    // this.curencyString = this.paymentService.getCurencyString();  
+    this.curencyString = this.paymentService.getCurencyString();  
   }
 
 }
