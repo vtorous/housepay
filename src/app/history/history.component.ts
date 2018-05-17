@@ -4,8 +4,7 @@ import { AppComponent } from '../app.component';
 import { Payment, PaymentByCounter, } from '../../month-payment';
 import { PaymentService } from '../payment.service';
 import { DatesService } from '../dates.service';
-import { Observable, timer, of } from 'rxjs';
-import { timeout } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 
 @Component({
@@ -22,7 +21,7 @@ export class HistoryComponent implements OnInit {
   curencyString: string;
 
   yearsList: number[] = [];
-  monthList: number[];
+  monthList: number[] = [];
   
   date: Date = new Date();
   
@@ -56,7 +55,6 @@ export class HistoryComponent implements OnInit {
 
     console.log("History onInit is runiing");
     // console.log(this.payments);
-
         
     this.datesService.getYearsList().subscribe(yearsList => {this.yearsList = yearsList;
       // console.log(this.yearsList);

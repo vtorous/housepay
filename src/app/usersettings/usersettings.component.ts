@@ -40,13 +40,7 @@ export class UsersettingsComponent implements OnInit {
     let tempArray: number[] = [];
     for (let i = 0; i < n; i++ ) {
       tempArray[i] = this.currentYear - i;
-      console.log(tempArray);
-      console.log(this.currentYear)
     }
-    
     return tempArray;
   }
-
-
-
 }

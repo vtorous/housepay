@@ -4,6 +4,7 @@ import { Payment, PaymentByCounter, } from '../month-payment';
 import { PaymentService } from './payment.service';
 
 import { Observable, of } from 'rxjs';
+import { timeout } from 'rxjs/operators';
 
 @Injectable()
 export class DatesService {
@@ -14,6 +15,7 @@ export class DatesService {
 
   yearsList: number[] = [];
   monthList: number[] = [];
+  sum;
 
  
 //------------------------------------------------------------------------
@@ -32,7 +34,6 @@ export class DatesService {
   }
 
 
-
   //------------------------------------------------------------------------
   // return ordered list of month where exist data about payments
   getMonthList(year: number): Observable<number[]> {
@@ -40,7 +41,6 @@ export class DatesService {
     this.paymentService.getPayments().subscribe(payments => {
     this.payments = payments;
       for (let index = 0; index < this.payments.length; index++) {
-        console.log(this.monthList + " ---" + year);
         const element = this.payments[index];
         if ( !this.monthList.includes(element.month) && element.year == year) {
             this.monthList.push(element.month);
@@ -73,25 +73,5 @@ export class DatesService {
     return monthHistory;
   }
 
-  //----------------------------------------------------------------------------------------------
-  getMonthTotalSum(year: number, month: number): number {
-    let sum = 0;
-    this.paymentService.getPayments().subscribe(payments => {
-      this.payments = payments;
-
-      for (let index = 0; index < this.payments.length; index++) {
-        const element = this.payments[index];
-
-        if (element.year == year && element.month == month) {
-          sum += element.sum;
-        }
-      }
-    });
-
-    return sum;
-  }
-
-  constructor(private paymentService: PaymentService) {
-    this.paymentService.getPayments().subscribe(payments => this.payments = payments);
-  }
+  constructor(private paymentService: PaymentService) { }
 }
