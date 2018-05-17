@@ -37,7 +37,7 @@ export class MonthHistoryDetailComponent implements OnInit {
         const element = this.payments[index];
         // console.log(this.totalMonthSum);
 
-        if (element.year == year && element.month == month && !isNaN(element.sum) {
+        if (element.year == year && element.month == month && !isNaN(element.sum)) {
           this.totalMonthSum += element.sum;
         }
       }
