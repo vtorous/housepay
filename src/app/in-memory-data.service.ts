@@ -76,15 +76,8 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 405, service: 'Phone', year: 2018, month: 5, sum: 125, paid: true},
       { id: 406, service: 'Internet', year: 2018, month: 5, sum: 125, paid: true},
   
-      { id: 400, service: 'Electricity', year: 2018, month: 6, sum: 125, paid: false, counterBeginMonth: undefined, counterEndMonth: undefined},
-      { id: 401, service: 'Gas', year: 2018, month: 6, sum: 125, paid: false, counterBeginMonth: undefined, counterEndMonth: undefined},
-      { id: 402, service: 'Water', year: 2018, month: 6, sum: undefined, paid: false, counterBeginMonth: undefined, counterEndMonth: undefined},
-      { id: 403, service: 'Rent', year: 2018, month: 6, sum: undefined, paid: false},
-      { id: 404, service: 'Garbage', year: 2018, month: 6, sum: 125, paid: false},
-      { id: 405, service: 'Phone', year: 2018, month: 6, sum: 125, paid: false},
-      { id: 406, service: 'Internet', year: 2018, month: 6, sum: 125, paid: false},
     ];
-    const user_settings = {
+    const userSettings = {
       beginMonth: 8,
       beginYear: 2017,
       services: [
@@ -97,7 +90,7 @@ export class InMemoryDataService implements InMemoryDbService {
           { id: 7, name: 'Internet', pricePerUnit: undefined, firstValue: undefined },
       ]
     }
-    const db = { payments, user_settings };
+    const db = { payments, userSettings };
     return db;
   }
 }

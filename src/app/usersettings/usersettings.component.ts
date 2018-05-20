@@ -26,16 +26,31 @@ export class UsersettingsComponent implements OnInit {
               private datesService: DatesService) { }
 
   ngOnInit() {
-    this.usersettingService.getUserSettings().subscribe(userSettings => this.userSettings = userSettings);
+    this.usersettingService.getUserSettings()
+      .subscribe(userSettings => {this.userSettings = userSettings;
+        console.log(this.userSettings);
+      });
+
 
     this.currentMonth = this.date.getMonth();
     this.currentYear = this.date.getFullYear();
 
     this.previousYearsList = this.getPreviousYearsList(4);
 
-    console.log(this.currentYear, this.currentMonth);
+    // console.log(this.currentYear, this.currentMonth);
   }
-  
+
+  save(): void {
+    console.log(this.userSettings);
+  }
+
+  reset(): void {
+      this.usersettingService.getUserSettings()
+        .subscribe(userSettings => {this.userSettings = userSettings;
+          console.log(this.userSettings);
+        });
+  }
+
   getPreviousYearsList(n: number) {
     let tempArray: number[] = [];
     for (let i = 0; i < n; i++ ) {

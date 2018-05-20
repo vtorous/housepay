@@ -11,13 +11,13 @@
                     </div>
                     <label for="xxx" class="col-4 col-md-3 col-form-label">Begin counting</label>
                     <div class="col">
-                        <select class="form-control custom-select w-auto" id="inlineFormCustomSelect">
+                        <select class="form-control custom-select w-auto" id="beginYearSelect">
                             <option *ngFor="let year of previousYearsList"
-                                    [selected]="year == userSettings.beginYear">{{year}}</option>
+                                    [selected]="year == userSettings?.beginYear">{{year}}</option>
                         </select>
-                        <select class="form-control custom-select w-auto" id="inlineFormCustomSelect">
+                        <select class="form-control custom-select w-auto" id="beginMonthSelect">
                             <option *ngFor="let month of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]"
-                                     [selected]="month == userSettings.beginMonth">{{month | month}}</option>
+                                     [selected]="month == userSettings?.beginMonth">{{month | month}}</option>
                         </select>
                     </div>
                     <div class="col-12 mt-4">
@@ -25,18 +25,30 @@
                         <hr>
                     </div>
                 </div>
-                <div class="row" *ngFor="let serv of userSettings.services">
-                    <label for="servicename1" class="col-md-3 col-form-label">Service name</label>
+                <div class="row" *ngFor="let serv of userSettings?.services">
+                    <label for="servicename{{serv.id}}" class="col-md-3 col-form-label">Service name</label>
                     <div class="col-md-9 mb-1">
-                        <input type="text" class="form-control" id="servicename1" value="{{serv.name}}">
+                        <input type="text"
+                            class="form-control"
+                            name="servicename{{serv.id}}"
+                            value="{{serv.name}}"
+                            [(ngModel)]="serv.name">
                     </div>
-                    <label *ngIf="serv.pricePerUnit" for="serviceprice1" class="col-md-3 col-form-label">Price per unit</label>
+                    <label *ngIf="serv.pricePerUnit" for="serviceprice{{serv.id}}" class="col-md-3 col-form-label">Price per unit</label>
                     <div *ngIf="serv.pricePerUnit" class="col-md-9 mb-1">
-                        <input type="text" class="form-control" id="serviceprice1" value="{{serv.pricePerUnit}}">
+                        <input type="text"
+                            class="form-control"
+                            name="serviceprice{{serv.id}}"
+                            value="{{serv.pricePerUnit}}"
+                            [(ngModel)]="serv.pricePerUnit">
                     </div>
-                    <label *ngIf="serv.firstValue" for="servicementer1" class="col-md-3 col-form-label">Start meter value</label>
+                    <label *ngIf="serv.firstValue" for="servicementer{{serv.id}}" class="col-md-3 col-form-label">Start meter value</label>
                     <div *ngIf="serv.firstValue" class="col-md-9 mb-4">
-                        <input type="text" class="form-control" id="servicemeter1" value="{{serv.firstValue}}">
+                        <input type="text"
+                            class="form-control"
+                            name="servicemeter{{serv.id}}"
+                            value="{{serv.firstValue}}"
+                            [(ngModel)]="serv.firstValue">
                     </div>
 
                     <div class="col-12">  <hr class="pt-1 pb-1"> </div>
@@ -44,7 +56,14 @@
                 <div class="row">
                     <div class="col-md-3"></div>
                     <div class="col">
-                        <button type="button" class="btn btn-secondary">Save setting</button>
+                        <button type="button" class="btn btn-secondary"
+                            (click)="save()">
+                            Save setting
+                        </button>
+                        <button type="button" class="btn btn-secondary"
+                        (click)="reset()">
+                            Reset setting
+                        </button>
                         <br>
                     </div>
                 </div>

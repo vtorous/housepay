@@ -14,6 +14,7 @@ import { PaymentService } from '../payment.service';
 export class PaymentComponent implements OnInit {
 
   yearsList: number[];
+  monthList: number[]
   currentMonth;
   currentYear;
   date: Date = new Date();
@@ -21,16 +22,26 @@ export class PaymentComponent implements OnInit {
     
   constructor(private datesService: DatesService) { }
 
+  onChange(): void {
+    this.datesService.getMonthList(this.currentYear).subscribe(monthList => {this.monthList = monthList;
+      console.log("onChange is running");
+    });
+  }
+
+
   ngOnInit() {
     this.currentMonth = this.date.getMonth(); 
     this.currentYear = this.date.getFullYear();
   
     this.datesService.getYearsList().subscribe(yearsList => {this.yearsList = yearsList;
-      console.log(this.yearsList);
-      console.log("onInit paymentComponent is running");
+      // console.log(this.yearsList);
+      // console.log("onInit paymentComponent is running");
     });
 
-
+    this.datesService.getMonthList(this.currentYear).subscribe(monthList => {this.monthList = monthList;
+      console.log(this.monthList);
+      console.log('This is month list in the payment component');
+    });
     
     console.log("History onInit is runiing");
     // console.log(this.payments);

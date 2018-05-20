@@ -5,6 +5,7 @@ import { PaymentService } from './payment.service';
 
 import { Observable, of } from 'rxjs';
 import { timeout } from 'rxjs/operators';
+import { element } from 'protractor';
 
 @Injectable()
 export class DatesService {
@@ -22,16 +23,18 @@ export class DatesService {
   // return list of years where exist data about payments
   getYearsList(): Observable<number[]> {
     this.paymentService.getPayments().subscribe(payments => {
-    this.payments = payments;
-      for (let index = 0; index < this.payments.length; index++) {
-        let element = this.payments[index];
+      this.payments = payments;
+
+      this.payments.forEach(function (element) {
         if (!this.yearsList.includes(element.year)) {
           this.yearsList.push(element.year);
         }
-      }
+      }, this);
+
     });
     return of(this.yearsList);
   }
+
 
 
   //------------------------------------------------------------------------
@@ -39,15 +42,16 @@ export class DatesService {
   getMonthList(year: number): Observable<number[]> {
     this.monthList = [];
     this.paymentService.getPayments().subscribe(payments => {
-    this.payments = payments;
-      for (let index = 0; index < this.payments.length; index++) {
-        const element = this.payments[index];
-        if ( !this.monthList.includes(element.month) && element.year == year) {
-            this.monthList.push(element.month);
+      this.payments = payments;
+
+      this.payments.forEach(function (element) {
+        if (element.year == year && !this.monthList.includes(element.month)) {
+          this.monthList.push(element.month);
         }
-      }
+      }, this);
+
     });
-    return of (this.monthList);
+    return of(this.monthList);
   }
 
 
@@ -58,9 +62,8 @@ export class DatesService {
     var monthHistory: { service: string, sum: number }[] = [];
     this.paymentService.getPayments().subscribe(payments => {
       this.payments = payments;
-      for (let index = 0; index < this.payments.length; index++) {
-        const element = this.payments[index];
-
+    
+      this.payments.forEach(function (element) {
         if (element.year == year && element.month == month) {
           let obj = {
             service: element.service,
@@ -68,7 +71,8 @@ export class DatesService {
           }
           monthHistory.push(obj);
         }
-      }
+      });
+
     });
     return monthHistory;
   }

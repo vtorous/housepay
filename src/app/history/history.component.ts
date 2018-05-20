@@ -41,7 +41,6 @@ export class HistoryComponent implements OnInit {
   //----------------------------------------------------------------------------------------------
   onChange(): void {
     this.datesService.getMonthList(this.currentYear).subscribe(monthList => {this.monthList = monthList;
-      // console.log(this.monthList);
     });
   }
 
@@ -52,17 +51,9 @@ export class HistoryComponent implements OnInit {
     this.currentYear = this.date.getFullYear();
 
     this.getPayments();
-
-    console.log("History onInit is runiing");
-    // console.log(this.payments);
-        
-    this.datesService.getYearsList().subscribe(yearsList => {this.yearsList = yearsList;
-      // console.log(this.yearsList);
-    });
-
-    this.datesService.getMonthList(this.currentYear).subscribe(monthList => {this.monthList = monthList;
-      // console.log(this.monthList);
-    });
+       
+    this.datesService.getYearsList().subscribe(yearsList => { this.yearsList = yearsList; });
+    this.datesService.getMonthList(this.currentYear).subscribe(monthList => { this.monthList = monthList; });
     
     this.curencyString = this.paymentService.getCurencyString();  
   }
