@@ -1,11 +1,14 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 
-import { HttpClientModule} from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './/app-routing.module';
+
+import { HttpClientModule} from '@angular/common/http';
+
 import { PaymentComponent } from './payment/payment.component';
 import { HistoryComponent } from './history/history.component';
 import { UsersettingsComponent } from './usersettings/usersettings.component';
@@ -31,6 +34,7 @@ import { PaymentService } from './payment.service';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }

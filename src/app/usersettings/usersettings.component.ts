@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { UsersettingsService } from '../usersettings.service';
 import { DatesService } from '../dates.service';
@@ -15,16 +16,16 @@ export class UsersettingsComponent implements OnInit {
 
   userSettings;
 
-  currentMonth: number;
-  currentYear: number; 
-  
+       currentMonth: number;
+        currentYear: number; 
   previousYearsList: number[] = [];
-
-  date: Date = new Date();
+               date: Date = new Date();
 
   constructor(private usersettingService: UsersettingsService,
               private datesService: DatesService) { }
 
+
+  // -------------------------------------------------------------------------              
   ngOnInit() {
     this.usersettingService.getUserSettings()
       .subscribe(userSettings => {this.userSettings = userSettings;
@@ -40,10 +41,12 @@ export class UsersettingsComponent implements OnInit {
     // console.log(this.currentYear, this.currentMonth);
   }
 
+  // -------------------------------------------------------------------------
   save(): void {
     console.log(this.userSettings);
   }
 
+  // -------------------------------------------------------------------------
   reset(): void {
       this.usersettingService.getUserSettings()
         .subscribe(userSettings => {this.userSettings = userSettings;
