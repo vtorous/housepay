@@ -3,7 +3,7 @@
         <div class="col pt-4 pb-1">
             <h1 class="pageheader">Setings</h1>
 
-            <form class="mb-3">
+            <form class="mb-3" [formGroup]="userSettingForm">
                 <div class="form-row">
                     <div class="col-12 mt-4">
                         <h5>General settings</h5>
@@ -11,11 +11,11 @@
                     </div>
                     <label for="xxx" class="col-4 col-md-3 col-form-label">Begin counting</label>
                     <div class="col">
-                        <select class="form-control custom-select w-auto" id="beginYearSelect">
+                        <select class="form-control custom-select w-auto" formControlName="beginYear">
                             <option *ngFor="let year of previousYearsList"
                                     [selected]="year == userSettings?.beginYear">{{year}}</option>
                         </select>
-                        <select class="form-control custom-select w-auto" id="beginMonthSelect">
+                        <select class="form-control custom-select w-auto" formControlName="beginMonth">
                             <option *ngFor="let month of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]"
                                      [selected]="month == userSettings?.beginMonth">{{month | month}}</option>
                         </select>
@@ -53,6 +53,7 @@
 
                     <div class="col-12">  <hr class="pt-1 pb-1"> </div>
                 </div>
+
                 <div class="row">
                     <div class="col-md-3"></div>
                     <div class="col">
@@ -68,6 +69,8 @@
                     </div>
                 </div>
             </form>
+            <div>userSettingForm {{userSettingForm.value | json}}</div>
+            <div>userSettingForm {{userSettings | json}}</div>
         </div>
     </div>
 </div>

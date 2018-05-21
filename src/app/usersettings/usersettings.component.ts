@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { Component, OnInit, OnChanges } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 
 import { UsersettingsService } from '../usersettings.service';
 import { DatesService } from '../dates.service';
@@ -12,33 +12,74 @@ import { PaymentService } from '../payment.service';
   providers: [ UsersettingsService, DatesService, PaymentService],
 })
 
-export class UsersettingsComponent implements OnInit {
-
+export class UsersettingsComponent implements OnChanges, OnInit {
   userSettings;
-
-       currentMonth: number;
-        currentYear: number; 
+  userSettingForm: FormGroup;
+  currentMonth: number;
+  currentYear: number;
   previousYearsList: number[] = [];
-               date: Date = new Date();
+  date: Date = new Date();
 
   constructor(private usersettingService: UsersettingsService,
-              private datesService: DatesService) { }
+              private datesService: DatesService,
+              private fb: FormBuilder) {
 
+    this.createForm();
+    console.log(this.userSettingForm);
+  }
 
-  // -------------------------------------------------------------------------              
+  createForm() {
+    this.userSettingForm = this.fb.group({
+      beginMonth: '',
+      beginYear: '',
+      services: this.fb.array([]),
+    });
+  }
+
+  // // -------------------------------------------------------------------------
+  ngOnChanges() {
+    console.log("ngOnChange is running");
+    this.rebuildForm();
+  }
+
+  // -------------------------------------------------------------------------
+  rebuildForm() {
+    this.userSettingForm.reset({
+      beginMonth: this.userSettings.beginMonth,
+      beginYear: this.userSettings.beginYear,
+    });
+    // this.setServices(this.userSettings.services);
+
+    console.log("this is rebuildForm function");
+  }
+
+  // //--------------------------------------------------------------------------
+  
+  // get services(): FormArray {
+  //   return this.userSettingForm.get('services') as FormArray;
+  // };
+  
+  // -------------------------------------------------------------------------
+  setServices(services: {}[]) {
+    const servicesFGs = services.map(services => this.fb.group(services));
+    const servicesFormArray = this.fb.array(servicesFGs);
+    this.userSettingForm.setControl('services', servicesFormArray);
+    console.log(servicesFormArray);
+  }
+
+  // -------------------------------------------------------------------------
   ngOnInit() {
     this.usersettingService.getUserSettings()
       .subscribe(userSettings => {this.userSettings = userSettings;
-        console.log(this.userSettings);
+        // console.log(this.userSettings);
       });
-
 
     this.currentMonth = this.date.getMonth();
     this.currentYear = this.date.getFullYear();
-
     this.previousYearsList = this.getPreviousYearsList(4);
 
-    // console.log(this.currentYear, this.currentMonth);
+    
+    // this.rebuildForm();
   }
 
   // -------------------------------------------------------------------------
@@ -46,19 +87,21 @@ export class UsersettingsComponent implements OnInit {
     console.log(this.userSettings);
   }
 
-  // -------------------------------------------------------------------------
-  reset(): void {
-      this.usersettingService.getUserSettings()
-        .subscribe(userSettings => {this.userSettings = userSettings;
-          console.log(this.userSettings);
-        });
-  }
+  // // -------------------------------------------------------------------------
+  // reset(): void {
+  //     this.usersettingService.getUserSettings()
+  //       .subscribe(userSettings => {this.userSettings = userSettings;
+  //         console.log(this.userSettings);
+  //       });
+  // }
 
+  // -------------------------------------------------------------------------
   getPreviousYearsList(n: number) {
     let tempArray: number[] = [];
     for (let i = 0; i < n; i++ ) {
       tempArray[i] = this.currentYear - i;
     }
+    console.log(tempArray);
     return tempArray;
   }
 }
