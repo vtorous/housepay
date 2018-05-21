@@ -12,7 +12,7 @@ import { PaymentService } from '../payment.service';
   providers: [ UsersettingsService, DatesService, PaymentService],
 })
 
-export class UsersettingsComponent implements OnChanges, OnInit {
+export class UsersettingsComponent implements OnInit, OnChanges  {
   userSettings;
   userSettingForm: FormGroup;
   currentMonth: number;
@@ -25,21 +25,28 @@ export class UsersettingsComponent implements OnChanges, OnInit {
               private fb: FormBuilder) {
 
     this.createForm();
-    console.log(this.userSettingForm);
+    // console.log(this.userSettingForm);
   }
 
   createForm() {
     this.userSettingForm = this.fb.group({
-      beginMonth: '',
-      beginYear: '',
-      services: this.fb.array([]),
+      beginMonth: 0,
+      beginYear: 0,
+      services: this.fb.array([
+        {
+        name: '',
+        pricePerUnit: '',
+        firstValue: ''
+        }
+      ]),
     });
+    console.log(this.userSettingForm);
   }
 
-  // // -------------------------------------------------------------------------
+  // -------------------------------------------------------------------------
   ngOnChanges() {
     console.log("ngOnChange is running");
-    this.rebuildForm();
+    // this.rebuildForm();
   }
 
   // -------------------------------------------------------------------------
@@ -48,9 +55,9 @@ export class UsersettingsComponent implements OnChanges, OnInit {
       beginMonth: this.userSettings.beginMonth,
       beginYear: this.userSettings.beginYear,
     });
-    // this.setServices(this.userSettings.services);
+    this.setServices(this.userSettings.services);
 
-    console.log("this is rebuildForm function");
+    // console.log("this is rebuildForm function");
   }
 
   // //--------------------------------------------------------------------------
@@ -64,22 +71,19 @@ export class UsersettingsComponent implements OnChanges, OnInit {
     const servicesFGs = services.map(services => this.fb.group(services));
     const servicesFormArray = this.fb.array(servicesFGs);
     this.userSettingForm.setControl('services', servicesFormArray);
-    console.log(servicesFormArray);
+    // console.log(servicesFormArray);
   }
 
   // -------------------------------------------------------------------------
   ngOnInit() {
     this.usersettingService.getUserSettings()
       .subscribe(userSettings => {this.userSettings = userSettings;
-        // console.log(this.userSettings);
+        this.rebuildForm();
       });
 
     this.currentMonth = this.date.getMonth();
     this.currentYear = this.date.getFullYear();
     this.previousYearsList = this.getPreviousYearsList(4);
-
-    
-    // this.rebuildForm();
   }
 
   // -------------------------------------------------------------------------
@@ -101,7 +105,18 @@ export class UsersettingsComponent implements OnChanges, OnInit {
     for (let i = 0; i < n; i++ ) {
       tempArray[i] = this.currentYear - i;
     }
-    console.log(tempArray);
+    // console.log(tempArray);
     return tempArray;
   }
+
+  // -------------------------------------------------------------------------
+//   trackByFn(index: any, item: any) {
+//     return index;
+//  }
+
+ trackByFn(index, item) {
+  return item.id;
+}
+
+ 
 }

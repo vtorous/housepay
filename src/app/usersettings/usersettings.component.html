@@ -17,7 +17,7 @@
                         </select>
                         <select class="form-control custom-select w-auto" formControlName="beginMonth">
                             <option *ngFor="let month of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]"
-                                     [selected]="month == userSettings?.beginMonth">{{month | month}}</option>
+                                     [selected]="month == userSettingForm.value.beginMonth">{{month | month}}</option>
                         </select>
                     </div>
                     <div class="col-12 mt-4">
@@ -25,34 +25,34 @@
                         <hr>
                     </div>
                 </div>
-                <div class="row" *ngFor="let serv of userSettings?.services">
-                    <label for="servicename{{serv.id}}" class="col-md-3 col-form-label">Service name</label>
-                    <div class="col-md-9 mb-1">
-                        <input type="text"
-                            class="form-control"
-                            name="servicename{{serv.id}}"
-                            value="{{serv.name}}"
-                            [(ngModel)]="serv.name">
-                    </div>
-                    <label *ngIf="serv.pricePerUnit" for="serviceprice{{serv.id}}" class="col-md-3 col-form-label">Price per unit</label>
-                    <div *ngIf="serv.pricePerUnit" class="col-md-9 mb-1">
-                        <input type="text"
-                            class="form-control"
-                            name="serviceprice{{serv.id}}"
-                            value="{{serv.pricePerUnit}}"
-                            [(ngModel)]="serv.pricePerUnit">
-                    </div>
-                    <label *ngIf="serv.firstValue" for="servicementer{{serv.id}}" class="col-md-3 col-form-label">Start meter value</label>
-                    <div *ngIf="serv.firstValue" class="col-md-9 mb-4">
-                        <input type="text"
-                            class="form-control"
-                            name="servicemeter{{serv.id}}"
-                            value="{{serv.firstValue}}"
-                            [(ngModel)]="serv.firstValue">
-                    </div>
 
-                    <div class="col-12">  <hr class="pt-1 pb-1"> </div>
+                <div formArrayName="services" class="well well-lg">
+                    <!-- <div class="row" *ngFor="let serv of userSettings?.services"> -->
+                    <!-- <div *ngFor="let address of secretLairs.controls; let i=index" [formGroupName]="i" > -->
+                    <div class="row" *ngFor="let serv of userSettingForm.value.services; let i=index; trackBy:trackByFn" [formGroupName]="i" >                                                        
+                        <label class="col-md-3 col-form-label">Service name</label>
+                        <div class="col-md-9 mb-1">
+                            <input type="text"
+                                class="form-control"
+                                formControlName="name">
+                        </div>
+                        <label *ngIf="serv.pricePerUnit !== undefined" class="col-md-3 col-form-label">Price per unit</label>
+                        <div *ngIf="serv.pricePerUnit !== undefined" class="col-md-9 mb-1">
+                            <input type="text"
+                                class="form-control"
+                                formControlName="pricePerUnit">
+                        </div>
+                        <label *ngIf="serv.firstValue !== undefined" class="col-md-3 col-form-label">Start meter value</label>
+                        <div *ngIf="serv.firstValue !== undefined" class="col-md-9 mb-4">
+                            <input type="text"
+                                class="form-control"
+                                formControlName="firstValue">
+                        </div>
+                        <div class="col-12"><hr class="pt-1 pb-1"></div>
+                    </div>
                 </div>
+
+
 
                 <div class="row">
                     <div class="col-md-3"></div>
@@ -69,8 +69,7 @@
                     </div>
                 </div>
             </form>
-            <div>userSettingForm {{userSettingForm.value | json}}</div>
-            <div>userSettingForm {{userSettings | json}}</div>
+            <div>userSettingForm.value {{userSettingForm.value | json}}</div>
         </div>
     </div>
 </div>
