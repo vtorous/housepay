@@ -1,8 +1,9 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
+import {Payment, PaymentByCounter, UserSettingsClass} from '../data-models'
 
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
-    const payments = [
+    const payments: (Payment | PaymentByCounter)[] = [
       { id: 90, service: 'Electricity', year: 2016, month: 6, sum: 25, paid: true, counterBeginMonth: 25, counterEndMonth: 35},
       { id: 91, service: 'Gas', year: 2016, month: 6, sum: 25, paid: true, counterBeginMonth: 25, counterEndMonth: 35},
       { id: 92, service: 'Water', year: 2016, month: 6, sum: 25, paid: true, counterBeginMonth: 25, counterEndMonth: 35},
@@ -77,7 +78,7 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 406, service: 'Internet', year: 2018, month: 5, sum: 125, paid: true},
   
     ];
-    const userSettings = {
+    const userSettings: UserSettingsClass = {
       beginMonth: 8,
       beginYear: 2017,
       services: [

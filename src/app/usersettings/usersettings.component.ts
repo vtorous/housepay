@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { UsersettingsService } from '../usersettings.service';
 import { DatesService } from '../dates.service';
@@ -33,12 +33,18 @@ export class UsersettingsComponent implements OnInit, OnChanges  {
       beginMonth: 0,
       beginYear: 0,
       services: this.fb.array([
-        {
-        name: '',
-        pricePerUnit: '',
-        firstValue: ''
-        }
-      ]),
+        this.fb.group({
+        name: ['', [
+          Validators.required,
+          Validators.pattern(/[A-z]/),
+          Validators.maxLength(55),
+         ]
+        ],
+          pricePerUnit: 0,
+          firstValue: 0
+        })
+      ]
+    ),
     });
     console.log(this.userSettingForm);
   }
@@ -114,9 +120,7 @@ export class UsersettingsComponent implements OnInit, OnChanges  {
 //     return index;
 //  }
 
- trackByFn(index, item) {
-  return item.id;
-}
-
- 
+  trackByFn(index, item) {
+    return item.id;
+  }
 }

@@ -43,3 +43,7 @@ h1.pageheader {
 .prev_next_month {
     width: 11em;
 }
+
+input.ng-touched.ng-invalid{
+    border-color: red;
+   }

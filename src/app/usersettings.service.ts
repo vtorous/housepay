@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {UserSettingsClass} from '../data-models'
 
 // import { USER_SETTINGS } from '../usersetting-mockupt';
 
@@ -13,7 +14,7 @@ export class UsersettingsService {
   constructor(private http: HttpClient) { }
 
 
-  getUserSettings(): Observable<any> {
+  getUserSettings(): Observable<UserSettingsClass> {
     return this.http.get<any>(this.userSettingUrl)
       .pipe(
         catchError(this.handleError('getUserSetting', [])),

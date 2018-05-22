@@ -4,7 +4,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Payment, PaymentByCounter, } from '../month-payment';
+import { Payment, PaymentByCounter, } from '../data-models';
 
 @Injectable()
 export class PaymentService {
