@@ -78,19 +78,20 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 406, service: 'Internet', year: 2018, month: 5, sum: 125, paid: true},
   
     ];
-    const userSettings: UserSettingsClass = {
+    const userSettings: UserSettingsClass[] = [{
+      id: 0,
       beginMonth: 8,
       beginYear: 2017,
       services: [
           { id: 0, name: 'Electricity', pricePerUnit: 2.5, firstValue: 202354 },
           { id: 1, name: 'Gas', pricePerUnit: 7.5, firstValue: 6535 },
           { id: 2, name: 'Water', pricePerUnit: 25, firstValue: 985645 },
-          { id: 3, name: 'Rent', pricePerUnit: undefined, firstValue: undefined },
-          { id: 4, name: 'Garbage', pricePerUnit: undefined, firstValue: undefined },
-          { id: 5, name: 'Phone', pricePerUnit: undefined, firstValue: undefined },
-          { id: 6, name: 'Internet', pricePerUnit: undefined, firstValue: undefined },
+          { id: 3, name: 'Rent', pricePerUnit: null, firstValue: null },
+          { id: 4, name: 'Garbage', pricePerUnit: null, firstValue: null },
+          { id: 5, name: 'Phone', pricePerUnit: null, firstValue: null },
+          { id: 6, name: 'Internet', pricePerUnit: null, firstValue: null },
       ]
-    }
+    }]
     const db = { payments, userSettings };
     return db;
   }

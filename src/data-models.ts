@@ -13,6 +13,7 @@ export class PaymentByCounter extends Payment {
 }
 
 export class UserSettingsClass{
+        id: number;
         beginMonth: number;
         beginYear: number;
         services: 

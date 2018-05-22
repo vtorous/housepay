@@ -14,7 +14,7 @@ import { UserSettingsClass } from '../../data-models';
 })
 
 export class UsersettingsComponent implements OnInit, OnChanges  {
-  userSettings;
+  userSettings: UserSettingsClass[];
   userSettingForm: FormGroup;
   currentMonth: number;
   currentYear: number;
@@ -31,26 +31,12 @@ export class UsersettingsComponent implements OnInit, OnChanges  {
 
   createForm() {
     this.userSettingForm = this.fb.group({
+      id: 0,
       beginMonth: 0,
       beginYear: 0,
       services: this.fb.array([  ]),
     });
-    console.log(this.userSettingForm);
   }
-
-  // createItem(): FormGroup {
-  //   return this.fb.group({
-  //       name: ['', [
-  //         Validators.required,
-  //         Validators.pattern(/[A-z]/),
-  //         Validators.maxLength(55),
-  //        ]
-  //       ],
-  //     pricePerUnit: '',
-  //     firstValue: ''
-  //   });
-  // }
-
 
   // -------------------------------------------------------------------------
   ngOnChanges() {
@@ -61,10 +47,12 @@ export class UsersettingsComponent implements OnInit, OnChanges  {
   // -------------------------------------------------------------------------
   rebuildForm() {
     this.userSettingForm.reset({
-      beginMonth: this.userSettings.beginMonth,
-      beginYear: this.userSettings.beginYear,
+      id: 0,
+      beginMonth: this.userSettings[0].beginMonth,
+      beginYear: this.userSettings[0].beginYear,
     });
-    this.setServices(this.userSettings.services);
+    this.setServices(this.userSettings[0].services);
+    console.log(this.userSettingForm);
   }
 
   // //--------------------------------------------------------------------------
@@ -75,44 +63,39 @@ export class UsersettingsComponent implements OnInit, OnChanges  {
   
   // -------------------------------------------------------------------------
   setServices(services: {}[]) {
-    console.log(services);
-
     for(let i = 0; i < services.length; i++) {
-      services[i]["name"] = [this.userSettings.services[i].name, [Validators.required, Validators.pattern('[a-zA-Z0-9\\s]+$'), Validators.maxLength(25), Validators.minLength(2)]];
-      services[i]["pricePerUnit"] = [this.userSettings.services[i].pricePerUnit, [Validators.required, Validators.pattern('[0-9]+(\.[0-9][0-9]?)?')]];
-      services[i]["firstValue"] = [this.userSettings.services[i].firstValue, [Validators.required, Validators.pattern('[0-9]+')]];
+      services[i]["name"] = [this.userSettings[0].services[i].name, [Validators.required, Validators.pattern('[a-zA-Z0-9\\s]+$'), Validators.maxLength(25), Validators.minLength(2)]];
+      services[i]["pricePerUnit"] = [this.userSettings[0].services[i].pricePerUnit, [Validators.required, Validators.pattern('[0-9]+(\.[0-9][0-9]?)?')]];
+      services[i]["firstValue"] = [this.userSettings[0].services[i].firstValue, [Validators.required, Validators.pattern('[0-9]+')]];
     }
 
     const servicesFGs = services.map(services => this.fb.group(services));
-    console.log(servicesFGs);
     const servicesFormArray = this.fb.array(servicesFGs);
     this.userSettingForm.setControl('services', servicesFormArray);
   }
 
   // -------------------------------------------------------------------------
   ngOnInit() {
-    this.usersettingService.getUserSettings()
-      .subscribe(userSettings => {this.userSettings = userSettings;
+
+    this.usersettingService.getUserSettings().subscribe(userSettings => {this.userSettings = userSettings;
         this.rebuildForm();
+        console.log(this.userSettings);
       });
 
     this.currentMonth = this.date.getMonth();
     this.currentYear = this.date.getFullYear();
     this.previousYearsList = this.getPreviousYearsList(4);
+
+
   }
 
   // -------------------------------------------------------------------------
-  save(): void {
-    console.log(this.userSettings);
-  }
+  update(): void {
 
-  // // -------------------------------------------------------------------------
-  // reset(): void {
-  //     this.usersettingService.getUserSettings()
-  //       .subscribe(userSettings => {this.userSettings = userSettings;
-  //         console.log(this.userSettings);
-  //       });
-  // }
+    this.usersettingService.updateUserSetting(
+      this.userSettingForm.value
+    ).subscribe();
+  }
 
   // -------------------------------------------------------------------------
   getPreviousYearsList(n: number) {
@@ -122,19 +105,6 @@ export class UsersettingsComponent implements OnInit, OnChanges  {
     }
     // console.log(tempArray);
     return tempArray;
-  }
-
-  // -------------------------------------------------------------------------
-//   trackByFn(index: any, item: any) {
-//     return index;
-//  }
-
-  isControlInvalid(controlName: string): boolean {
-    console.log(controlName);
-    const control = this.userSettingForm.controls[controlName];
-    const result = control.invalid && control.touched;
-
-    return result;
   }
 
   trackByFn(index, item) {

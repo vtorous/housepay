@@ -31,7 +31,7 @@
                     <div class="row" *ngFor="let serv of userSettingForm.value.services; let i=index; trackBy:trackByFn" [formGroupName]="i" >                                                        
                         <label class="col-md-3 col-form-label">Service name {{userSettingForm.controls.services.controls[i].error}}</label>
                         <div class="col-md-9 mb-1">
-                            <input type="text"
+                            <input required type="text" 
                                 class="form-control"
                                 formControlName="name">
                                 <div class="col-md-9 mb-4 error">Only letters and digits. Minimum 2 and maximum 20 symbols.</div>
@@ -39,7 +39,8 @@
                         
                         <label *ngIf="serv.pricePerUnit !== null" class="col-md-3 col-form-label">Price per unit</label>
                         <div *ngIf="serv.pricePerUnit !== null" class="col-md-9 mb-1">
-                            <input type="text"
+                            <input required
+                                type="text"
                                 class="form-control"
                                 formControlName="pricePerUnit">
                             <div class="col-md-9 mb-4 error">Decimal number </div>
@@ -47,7 +48,7 @@
 
                         <label *ngIf="serv.firstValue !== null" class="col-md-3 col-form-label">Start meter value</label>
                         <div *ngIf="serv.firstValue !== null" class="col-md-9 mb-4">
-                            <input type="text"
+                            <input type="number"
                                 class="form-control"
                                 formControlName="firstValue">
                                 <div class="col-md-9 mb-4 error">Only digits</div>
@@ -62,7 +63,7 @@
                     <div class="col-md-3"></div>
                     <div class="col">
                         <button type="button" class="btn btn-secondary mr-3"
-                            (click)="save()">
+                            (click)="update()">
                             Save setting
                         </button> 
                         <button type="button" class="btn btn-secondary"
@@ -73,7 +74,7 @@
                     </div>
                 </div>
             </form>
-            <!-- <div>userSettingForm.value {{userSettingForm.value | json}}</div> -->
+            <div>userSettingForm.value {{userSettingForm.value | json}}</div>
         </div>
     </div>
 </div>
