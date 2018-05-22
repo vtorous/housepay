@@ -4,6 +4,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsersettingsService } from '../usersettings.service';
 import { DatesService } from '../dates.service';
 import { PaymentService } from '../payment.service';
+import { UserSettingsClass } from '../../data-models';
 
 @Component({
   selector: 'app-usersettings',
@@ -32,22 +33,24 @@ export class UsersettingsComponent implements OnInit, OnChanges  {
     this.userSettingForm = this.fb.group({
       beginMonth: 0,
       beginYear: 0,
-      services: this.fb.array([
-        this.fb.group({
-        name: ['', [
-          Validators.required,
-          Validators.pattern(/[A-z]/),
-          Validators.maxLength(55),
-         ]
-        ],
-          pricePerUnit: 0,
-          firstValue: 0
-        })
-      ]
-    ),
+      services: this.fb.array([  ]),
     });
     console.log(this.userSettingForm);
   }
+
+  // createItem(): FormGroup {
+  //   return this.fb.group({
+  //       name: ['', [
+  //         Validators.required,
+  //         Validators.pattern(/[A-z]/),
+  //         Validators.maxLength(55),
+  //        ]
+  //       ],
+  //     pricePerUnit: '',
+  //     firstValue: ''
+  //   });
+  // }
+
 
   // -------------------------------------------------------------------------
   ngOnChanges() {
@@ -62,8 +65,6 @@ export class UsersettingsComponent implements OnInit, OnChanges  {
       beginYear: this.userSettings.beginYear,
     });
     this.setServices(this.userSettings.services);
-
-    // console.log("this is rebuildForm function");
   }
 
   // //--------------------------------------------------------------------------
@@ -74,10 +75,18 @@ export class UsersettingsComponent implements OnInit, OnChanges  {
   
   // -------------------------------------------------------------------------
   setServices(services: {}[]) {
+    console.log(services);
+
+    for(let i = 0; i < services.length; i++) {
+      services[i]["name"] = [this.userSettings.services[i].name, [Validators.required, Validators.pattern('[a-zA-Z0-9\\s]+$'), Validators.maxLength(25), Validators.minLength(2)]];
+      services[i]["pricePerUnit"] = [this.userSettings.services[i].pricePerUnit, [Validators.required, Validators.pattern('[0-9]+(\.[0-9][0-9]?)?')]];
+      services[i]["firstValue"] = [this.userSettings.services[i].firstValue, [Validators.required, Validators.pattern('[0-9]+')]];
+    }
+
     const servicesFGs = services.map(services => this.fb.group(services));
+    console.log(servicesFGs);
     const servicesFormArray = this.fb.array(servicesFGs);
     this.userSettingForm.setControl('services', servicesFormArray);
-    // console.log(servicesFormArray);
   }
 
   // -------------------------------------------------------------------------
@@ -119,6 +128,14 @@ export class UsersettingsComponent implements OnInit, OnChanges  {
 //   trackByFn(index: any, item: any) {
 //     return index;
 //  }
+
+  isControlInvalid(controlName: string): boolean {
+    console.log(controlName);
+    const control = this.userSettingForm.controls[controlName];
+    const result = control.invalid && control.touched;
+
+    return result;
+  }
 
   trackByFn(index, item) {
     return item.id;

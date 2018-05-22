@@ -28,30 +28,29 @@
                 </div>
 
                 <div formArrayName="services" class="well well-lg">
-                    <!-- <div class="row" *ngFor="let serv of userSettings?.services"> -->
-                    <!-- <div *ngFor="let address of secretLairs.controls; let i=index" [formGroupName]="i" > -->
                     <div class="row" *ngFor="let serv of userSettingForm.value.services; let i=index; trackBy:trackByFn" [formGroupName]="i" >                                                        
                         <label class="col-md-3 col-form-label">Service name {{userSettingForm.controls.services.controls[i].error}}</label>
                         <div class="col-md-9 mb-1">
                             <input type="text"
                                 class="form-control"
                                 formControlName="name">
+                                <div class="col-md-9 mb-4 error">Only letters and digits. Minimum 2 and maximum 20 symbols.</div>
                         </div>
-                        <!-- <div *ngIf="userSettingForm.name.is-invalid()">
-                            Oops, only urls served over https and only from the .io top-level domain are accepted. Talk about restrictions!
-                        </div> -->
                         
-                        <label *ngIf="serv.pricePerUnit !== undefined" class="col-md-3 col-form-label">Price per unit</label>
-                        <div *ngIf="serv.pricePerUnit !== undefined" class="col-md-9 mb-1">
+                        <label *ngIf="serv.pricePerUnit !== null" class="col-md-3 col-form-label">Price per unit</label>
+                        <div *ngIf="serv.pricePerUnit !== null" class="col-md-9 mb-1">
                             <input type="text"
                                 class="form-control"
                                 formControlName="pricePerUnit">
+                            <div class="col-md-9 mb-4 error">Decimal number </div>
                         </div>
-                        <label *ngIf="serv.firstValue !== undefined" class="col-md-3 col-form-label">Start meter value</label>
-                        <div *ngIf="serv.firstValue !== undefined" class="col-md-9 mb-4">
+
+                        <label *ngIf="serv.firstValue !== null" class="col-md-3 col-form-label">Start meter value</label>
+                        <div *ngIf="serv.firstValue !== null" class="col-md-9 mb-4">
                             <input type="text"
                                 class="form-control"
                                 formControlName="firstValue">
+                                <div class="col-md-9 mb-4 error">Only digits</div>
                         </div>
                         <div class="col-12"><hr class="pt-1 pb-1"></div>
                     </div>
@@ -74,7 +73,7 @@
                     </div>
                 </div>
             </form>
-            <div>userSettingForm.value {{userSettingForm.value | json}}</div>
+            <!-- <div>userSettingForm.value {{userSettingForm.value | json}}</div> -->
         </div>
     </div>
 </div>

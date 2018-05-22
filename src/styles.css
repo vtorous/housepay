@@ -44,6 +44,23 @@ h1.pageheader {
     width: 11em;
 }
 
-input.ng-touched.ng-invalid{
+/* input.ng-touched.ng-invalid{
     border-color: red;
-   }
+} */
+
+input.ng-touched.ng-invalid + div.error {
+    display: block;
+    position: relative;
+    opacity: 1;
+}
+
+div.error {
+    /* border: 1px solid red; */
+    font-size: 90%;
+    color: red;
+    opacity: 0;
+    height: 0px;
+    margin: 0;
+    position: absolute;
+    transition: all 1s ease;
+}
