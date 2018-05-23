@@ -14,12 +14,20 @@ import { UserSettingsClass } from '../../data-models';
 })
 
 export class UsersettingsComponent implements OnInit, OnChanges  {
+  
   userSettings: UserSettingsClass[];
   userSettingForm: FormGroup;
+  
   currentMonth: number;
   currentYear: number;
   previousYearsList: number[] = [];
   date: Date = new Date();
+
+  minServiceNameLenth: number = 2;
+  maxServiceNameLenth: number = 20;
+  pricePerUnitValidationPattern: string = '[0-9]+(\.[0-9][0-9]?)?';
+  firstValueValidationPattern: string = '[0-9]+';
+
 
   constructor(private usersettingService: UsersettingsService,
               private datesService: DatesService,
@@ -64,9 +72,23 @@ export class UsersettingsComponent implements OnInit, OnChanges  {
   // -------------------------------------------------------------------------
   setServices(services: {}[]) {
     for(let i = 0; i < services.length; i++) {
-      services[i]["name"] = [this.userSettings[0].services[i].name, [Validators.required, Validators.pattern('[a-zA-Z0-9\\s]+$'), Validators.maxLength(25), Validators.minLength(2)]];
-      services[i]["pricePerUnit"] = [this.userSettings[0].services[i].pricePerUnit, [Validators.required, Validators.pattern('[0-9]+(\.[0-9][0-9]?)?')]];
-      services[i]["firstValue"] = [this.userSettings[0].services[i].firstValue, [Validators.required, Validators.pattern('[0-9]+')]];
+      services[i]["name"] = [this.userSettings[0].services[i].name,
+                                            [ Validators.required,
+                                              Validators.pattern('[a-zA-Z0-9\\s]+$'),
+                                              Validators.maxLength(this.maxServiceNameLenth),
+                                              Validators.minLength(this.minServiceNameLenth)]];
+
+      if (this.userSettings[0].services[i].pricePerUnit) { 
+        services[i]["pricePerUnit"] = [this.userSettings[0].services[i].pricePerUnit,
+                                            [ Validators.required,
+                                              Validators.pattern(this.pricePerUnitValidationPattern)]];
+      }
+
+      if (this.userSettings[0].services[i].firstValue) {
+         services[i]["firstValue"] = [this.userSettings[0].services[i].firstValue,
+                                            [ Validators.required,
+                                              Validators.pattern(this.firstValueValidationPattern)]];
+      }
     }
 
     const servicesFGs = services.map(services => this.fb.group(services));
@@ -90,11 +112,15 @@ export class UsersettingsComponent implements OnInit, OnChanges  {
   }
 
   // -------------------------------------------------------------------------
-  update(): void {
-
-    this.usersettingService.updateUserSetting(
-      this.userSettingForm.value
-    ).subscribe();
+  onSubmit(): void {
+    if (this.userSettingForm.valid) {
+      this.usersettingService.updateUserSetting(
+        this.userSettingForm.value
+      ).subscribe();
+      console.log(this.userSettingForm);
+    } else {
+      alert("There are incorect fields in the form. Please check form carefully.")
+    }
   }
 
   // -------------------------------------------------------------------------

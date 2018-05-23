@@ -10,15 +10,18 @@
     <!-- Month select -->
     <div class="row py-3">
         <div class="col-md">
-            <button type="button" class="btn btn-active mt-1 prev_next_month"> &larr; April 2018</button>
+            <button (click)="goToPrevMonth()" type="button" class="btn btn-active mt-1 prev_next_month"> &larr; April 2018</button>
         </div>
         <div class="col-md text-md-center">
-            <select class="form-control form-control-lg form-control-plaintext d-inline-block w-auto">
+            <select
+                (change)="onMonthChange()"
+                [(ngModel)]="currentMonth"
+                class="form-control form-control-lg form-control-plaintext d-inline-block w-auto">
                 <option *ngFor="let month of monthList"
                 [selected]="month == currentMonth">{{month | month}}</option>
             </select>
             <select
-                (change)="onChange()"
+                (change)="onYearChange()"
                 [(ngModel)]="currentYear"
                 class="form-control form-control-lg form-control-plaintext d-inline-block w-auto">
                 <option *ngFor="let year of yearsList"
@@ -31,7 +34,11 @@
         </div>
     </div>
 
+    <p>{{payments | json}}</p>
 
+
+<!-- .................................................................................................................... -->
+    <p class="text-large" style="color:red">Fake category for test use</p>
     <!-- Electrycity category -->
     <div class="card mb-4">
         <div class="card-header unpaid text-white">
@@ -77,7 +84,7 @@
                         <li class="list-group-item">
                             <span class="align-middle">Month payment</span>
                             <span class="float-right">
-                                <input type="text" class="form-control text-right" id="xxxx" placeholder="uah">
+                                <input type="text" class="form-control text-right">
                             </span>
                         </li>
                     </ul>
@@ -85,7 +92,7 @@
                 <div class="col-md-3 col-lg-2 h-100 my-auto pb-3 pb-md-0 text-center">
                     <hr class="mt-0 d-md-none"> 
                     <div class="form-check form-check-inline bg">
-                            <input type="checkbox" class="form-check-input large-checkbox" id="exampleCheck1">
+                            <input type="checkbox" class="form-check-input large-checkbox">
                         <button type="button" class="btn btn-secondary ml-1">&nbsp;Pay&nbsp;</button>
                     </div>
                 </div>

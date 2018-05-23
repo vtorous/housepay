@@ -15,9 +15,9 @@ import { Observable, of } from 'rxjs';
 })
 
 export class HistoryComponent implements OnInit {
-  
-  
+    
   payments: (Payment|PaymentByCounter)[];
+
   curencyString: string;
 
   yearsList: number[] = [];
@@ -34,14 +34,14 @@ export class HistoryComponent implements OnInit {
   }
     
   //----------------------------------------------------------------------------------------------
-  getPayments(): void {
+  getPayments(year: number): void {
     this.paymentService.getPayments().subscribe(payments => this.payments = payments);
   } 
   
   //----------------------------------------------------------------------------------------------
   onChange(): void {
-    this.datesService.getMonthList(this.currentYear).subscribe(monthList => {this.monthList = monthList;
-    });
+    this.getPayments(this.currentYear);
+    this.datesService.getMonthList(this.currentYear).subscribe(monthList => {this.monthList = monthList; });
   }
 
 
@@ -50,8 +50,10 @@ export class HistoryComponent implements OnInit {
     this.currentMonth = this.date.getMonth();
     this.currentYear = this.date.getFullYear();
 
-    this.getPayments();
+    this.getPayments(this.currentYear);
        
+    this.paymentService.getPaymentsYear(2017).subscribe(payments => {this.payments = payments; console.log(this.payments)});
+
     this.datesService.getYearsList().subscribe(yearsList => { this.yearsList = yearsList; });
     this.datesService.getMonthList(this.currentYear).subscribe(monthList => { this.monthList = monthList; });
     

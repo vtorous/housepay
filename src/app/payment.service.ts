@@ -19,10 +19,29 @@ export class PaymentService {
         // tap(payments => console.log(`payment data fetched...${payments}`)),
         catchError(this.handleError('getPayments', []))
       );
-
   }
 
-  /**
+  getPaymentsYear(year: number): Observable<(Payment | PaymentByCounter)[]> {
+    const url = `${this.paymentsUrl}/?year=${year}`;
+    return this.http.get<(Payment | PaymentByCounter)[]>(url)
+      .pipe(
+        // tap(payments => console.log(`payment data fetched...${payments}`)),
+        catchError(this.handleError('getPaymentsYear', []))
+      );
+  }
+
+  getPaymentsYearMonth(year: number, month: number): Observable<(Payment | PaymentByCounter)[]> {
+    const url = `${this.paymentsUrl}/?year=${year}\&month=${month}`;
+    console.log(url);
+    return this.http.get<(Payment | PaymentByCounter)[]>(url)
+      .pipe(
+        // tap(payments => console.log(`payment data fetched...${payments}`)),
+        catchError(this.handleError('getPaymentsYear', []))
+      );
+  }
+
+
+/**
  * Handle Http operation that failed.
  * Let the app continue.
  * @param operation - name of the operation that failed
