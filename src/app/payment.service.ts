@@ -31,7 +31,7 @@ export class PaymentService {
   }
 
   getPaymentsYearMonth(year: number, month: number): Observable<(Payment | PaymentByCounter)[]> {
-    const url = `${this.paymentsUrl}/?year=${year}\&month=${month}`;
+    const url = `${this.paymentsUrl}/?year=${year}\&month=^${month}$`;
     console.log(url);
     return this.http.get<(Payment | PaymentByCounter)[]>(url)
       .pipe(

@@ -22,7 +22,7 @@ export class PaymentComponent implements OnInit {
   payments: (Payment|PaymentByCounter)[];
   
   yearsList: number[];
-  monthList: number[]
+  monthList: number[];
   
   currentMonth;
   currentYear;
@@ -40,21 +40,23 @@ export class PaymentComponent implements OnInit {
 
   getPayments(year: number, month:number): void {
     this.paymentService.getPaymentsYearMonth(year, month).subscribe(payments => this.payments = payments);
+
   } 
 
 
   onYearChange(): void {
     this.datesService.getMonthList(this.currentYear).subscribe(monthList => {this.monthList = monthList;
-      console.log("onChange is running");
+      this.currentMonth = this.monthList[0];
+      this.getPayments(this.currentYear, this.currentMonth);
     });
-    this.getPayments(this.currentYear, this.currentMonth);
-    console.log(this.currentYear + "---" + this.currentMonth);
+    
   }
 
   onMonthChange(): void {
     this.currentMonth = this.monthNames.indexOf(this.currentMonth);
     this.datesService.getMonthList(this.currentYear).subscribe(monthList => {this.monthList = monthList;
-      console.log("onChange is running");
+      console.log(this.monthList);
+      console.log('This is month list in the payment component');
     });
     this.getPayments(this.currentYear, this.currentMonth);
     console.log(this.currentYear + "---" + this.currentMonth);
@@ -68,6 +70,7 @@ export class PaymentComponent implements OnInit {
     this.datesService.getMonthList(this.currentYear).subscribe(monthList => {this.monthList = monthList;
       console.log("onChange is running");
     });   
+    
    
   }
 
@@ -86,8 +89,6 @@ export class PaymentComponent implements OnInit {
     });
 
     this.datesService.getMonthList(this.currentYear).subscribe(monthList => {this.monthList = monthList;
-      console.log(this.monthList);
-      console.log('This is month list in the payment component');
     });
     
     console.log("History onInit is runiing");

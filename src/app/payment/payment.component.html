@@ -18,7 +18,7 @@
                 [(ngModel)]="currentMonth"
                 class="form-control form-control-lg form-control-plaintext d-inline-block w-auto">
                 <option *ngFor="let month of monthList"
-                [selected]="month == currentMonth">{{month | month}}</option>
+                [selected]="month == this.currentMonth">{{month | month}}</option>
             </select>
             <select
                 (change)="onYearChange()"
@@ -36,9 +36,44 @@
 
     <p>{{payments | json}}</p>
 
+    <div  class="list-group-item" *ngFor="let payment of payments; let i=index; " class="card mb-4">
+        <div class="card-header unpaid text-white">
+            <strong class="text-uppercase">{{payment.service}}</strong>
+        </div>
+        <div class="row">
+            <div class="col-md-9 col-lg-10">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <span class="float-left">Previous month meter value</span>
+                        <span class="float-right"><strong>{{payment.counterBeginMonth}}</strong></span>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="align-middle">This month meter value</span>
+                        <span class="float-right">
+                            <input type="text" class="counter_value form-control text-right">
+                            <span class="float-right"><strong>{{payment.counterBeginMonth}}</strong></span>
+                        </span>
+                    </li>
+                    <li [class.d-none]="payment.hasOwnProperty('counterBeginMonth') && payment.counterEndMonth === undefined" class="list-group-item text-md-right text-center">
+                        <span class=""><a href="#" class="btn btn-secondary">Calculate</a></span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-3 col-lg-2 h-100 my-auto pb-3 pb-md-0 text-center">
+                <hr class="mt-0 d-md-none"> 
+                <span [class.d-none]="!payment.sum" class="text-muted text-large mr-3 b-5 d-none">{{payment.sum}}</span>
+                <div [class.d-none]="payment.sum"class="form-check form-check-inline mt-1">
+                    <input type="checkbox" class="form-check-input large-checkbox">
+                    <button type="button" class="btn btn-secondary ml-1">&nbsp;Pay&nbsp;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 <!-- .................................................................................................................... -->
-    <p class="text-large" style="color:red">Fake category for test use</p>
+    <p class="text-large" style="color:red">Fake category for test use ------------------------------------------------------- </p>
     <!-- Electrycity category -->
     <div class="card mb-4">
         <div class="card-header unpaid text-white">
