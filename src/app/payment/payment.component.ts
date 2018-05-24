@@ -28,7 +28,7 @@ export class PaymentComponent implements OnInit {
   currentYear;
 
   editedMonth;
-  editedYear;
+  editedYear; 
 
   date: Date = new Date();
   

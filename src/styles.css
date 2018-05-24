@@ -32,9 +32,12 @@ h1.pageheader {
 }
 
 .unpaid { 
-    background-color: #666;
+    background-color: rgb(45, 109, 168);
 }
 
+.paid {
+    background-color: darkgray;
+}
 
 .counter_value {
     width: 6em;
