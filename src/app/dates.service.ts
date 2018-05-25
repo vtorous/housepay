@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 
-import { Payment, PaymentByCounter, } from '../month-payment';
 import { PaymentService } from './payment.service';
 
 import { Observable, of } from 'rxjs';
 import { timeout } from 'rxjs/operators';
 import { element } from 'protractor';
+
+import { Payment, PaymentByCounter, YearMonth, UserSettingsClass} from '../data-models';
+import { UsersettingsService } from './usersettings.service';
 
 @Injectable()
 export class DatesService {
@@ -13,9 +15,11 @@ export class DatesService {
   curentMonth: number;
 
   payments: (Payment|PaymentByCounter)[];
+  userSettings: UserSettingsClass[];
 
   yearsList: number[] = [];
   monthList: number[] = [];
+  yearMonthList: YearMonth[] = [];
   sum;
 
  

@@ -10,31 +10,22 @@
     <!-- Month select -->
     <div class="row py-3">
         <div class="col-md">
-            <button (click)="goToPrevMonth()" type="button" class="btn btn-active mt-1 prev_next_month"> &larr; April 2018</button>
+            <button (click)="goToPrevMonth()" type="button" class="btn btn-active mt-1 prev_next_month"> &larr; Previous</button>
         </div>
         <div class="col-md text-md-center">
             <select
-                (change)="onMonthChange()"
-                [(ngModel)]="currentMonth"
+                (change)="onYearMonthChange()"
+                [(ngModel)]="currentYearMonthString"
                 class="form-control form-control-lg form-control-plaintext d-inline-block w-auto">
-                <option *ngFor="let month of monthList"
-                [selected]="month == this.currentMonth">{{month | month}}</option>
+                <option *ngFor="let yearMonth of yearMonthList  let i=index"
+                [selected]="yearMonth.year == this.currentYear && yearMonth.month == this.currentMonth">{{yearMonth.year}} {{yearMonth.month | month}} </option>
             </select>
-            <select
-                (change)="onYearChange()"
-                [(ngModel)]="currentYear"
-                class="form-control form-control-lg form-control-plaintext d-inline-block w-auto">
-                <option *ngFor="let year of yearsList"
-                    [selected]="year === currentYear">{{year}}</option>
-            </select>
-        </div>
+         </div>
 
         <div class="col-md text-md-right">
-            <button type="button" class="btn btn-active mt-1 prev_next_month">September 2018 &rarr;</button>
+            <button (click)="goToNextMonth()" type="button" class="btn btn-active mt-1 prev_next_month">Next &rarr;</button>
         </div>
     </div>
-
-    <p>{{payments | json}}</p>
 
     <div  class="list-group-item" *ngFor="let payment of payments; let i=index; " class="card mb-4">
         <div [class.unpaid]="!payment.paid" [class.paid]="payment.paid" class="card-header text-white">
@@ -45,13 +36,13 @@
                 <ul class="list-group list-group-flush">
                     <li *ngIf="payment.counterBeginMonth !== undefined" class="list-group-item">
                         <span class="float-left">Previous month meter value</span>
-                        <span class="float-right"><strong>{{payment.counterBeginMonth}}</strong></span>
+                        <span class="float-right">{{payment.counterBeginMonth}}</span>
                     </li>
                     <li *ngIf="payment.counterEndMonth !== undefined" class="list-group-item">
                         <span class="align-middle">This month meter value</span>
                         <span class="float-right">
                             <input *ngIf="payment.counterEndMonth === null" type="text" class="counter_value form-control text-right">
-                            <span class="float-right"><strong>{{payment.counterEndMonth}}</strong></span>
+                            <span class="float-right">{{payment.counterEndMonth}}</span>
                         </span>
                     </li>
                     <li *ngIf="payment.counterEndMonth !== undefined && !payment.paid"  class="list-group-item text-md-right text-center">
@@ -72,7 +63,7 @@
             </div>          
             <div class="col-md-3 col-lg-2 h-100 my-auto pb-3 pb-md-0 text-center">
                 <hr class="mt-0 d-md-none"> 
-                <span *ngIf="payment.sum" class="text-muted text-large mr-3 b-5">{{payment.sum}}</span>
+                <span *ngIf="payment.sum" class="text-muted text-large mr-3 b-5"><strong>{{payment.sum}}</strong> {{curencyString}}</span>
                 <div *ngIf="!payment.sum" class="form-check form-check-inline mt-1">
                     <input type="checkbox" class="form-check-input large-checkbox">
                     <button type="button" class="btn btn-secondary ml-1">&nbsp;Pay&nbsp;</button>
@@ -81,185 +72,8 @@
         </div>
     </div>
 
-
-
-<!-- .................................................................................................................... -->
-    <p class="text-large" style="color:red">Fake category for test use ------------------------------------------------------- </p>
-    
-        <!-- Garbage category -->
-        <div class="card mb-4">
-            <div class="card-header">
-                <strong class="text-uppercase">Garbage</strong>
-            </div>
-            <div class="row">
-                <div class="col-md-9 col-lg-10">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <span class="align-middle">The amount of payment for this month</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-3 col-lg-2 h-100 my-auto pb-3 pb-md-0 text-center">
-                    <hr class="mt-0 d-md-none"> 
-                    <span class="text-muted text-large">23.25 uah.</span>
-                </div>
-            </div>
-        </div>
-    
-    
-    <!-- Electrycity category -->
-    <div class="card mb-4">
-        <div class="card-header unpaid text-white">
-            <strong class="text-uppercase">Electrycity</strong>
-        </div>
-        <div class="row">
-            <div class="col-md-9 col-lg-10">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <span class="float-left">Previous month meter value</span>
-                        <span class="float-right"><strong>3525</strong></span>
-                    </li>
-                    <li class="list-group-item">
-                        <span class="align-middle">This month meter value</span>
-                        <span class="float-right">
-                            <input type="text" class="counter_value form-control text-right">
-                        </span>
-                    </li>
-                    <li class="list-group-item text-md-right text-center">
-                        <span class=""><a href="#" class="btn btn-secondary">Calculate</a></span>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-md-3 col-lg-2 h-100 my-auto pb-3 pb-md-0 text-center">
-                <hr class="mt-0 d-md-none"> 
-                <span class="text-muted text-large mr-3 b-5">175 uah.</span>
-                <div class="form-check form-check-inline mt-1">
-                    <input type="checkbox" class="form-check-input large-checkbox">
-                    <button type="button" class="btn btn-secondary ml-1">&nbsp;Pay&nbsp;</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Rent category -->
-    <div class="card mb-4">
-            <div class="card-header unpaid text-white">
-                <strong class="text-uppercase">Rent</strong>
-            </div>
-            <div class="row">
-                <div class="col-md-9 col-lg-10">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <span class="align-middle">Month payment</span>
-                            <span class="float-right">
-                                <input type="text" class="form-control text-right">
-                            </span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-3 col-lg-2 h-100 my-auto pb-3 pb-md-0 text-center">
-                    <hr class="mt-0 d-md-none"> 
-                    <div class="form-check form-check-inline bg">
-                            <input type="checkbox" class="form-check-input large-checkbox">
-                        <button type="button" class="btn btn-secondary ml-1">&nbsp;Pay&nbsp;</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-    <!-- Natural gas category -->
-    <div class="card mb-4">
-            <div class="card-header text-muted">
-                <strong class="text-uppercase">Natural gas</strong>
-            </div>
-            <div class="row">
-                <div class="col-md-9 col-lg-10">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <span class="text-muted float-left">Meter in the beginning of the month</span>
-                            <span class="text-muted float-right"><strong>29562</strong></span>
-                        </li>
-                        <li class="list-group-item">
-                            <span class="text-muted align-middle">Meter in the end of the month</span>
-                            <span class="text-muted float-right"><strong>31025</strong></span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-3 col-lg-2 h-100 my-auto pb-3 pb-md-0 text-center">
-                    <hr class="mt-0 d-md-none"> 
-                    <span class="text-muted text-large">175 uah.</span>
-                </div>
-            </div>
-        </div>
-        
-    <!-- Water category -->
-    <div class="card mb-4">
-        <div class="card-header text-muted">
-            <strong class="text-uppercase">Water</strong>
-        </div>
-        <div class="row">
-            <div class="col-md-9 col-lg-10">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <span class="text-muted float-left">Meter in the beginning of the month</span>
-                        <span class="text-muted float-right"><strong>328</strong></span>
-                    </li>
-                    <li class="list-group-item">
-                        <span class="text-muted align-middle">Meter in the end of the month</span>
-                        <span class="text-muted float-right"><strong>359</strong></span>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-md-3 col-lg-2 h-100 my-auto pb-3 pb-md-0 text-center">
-                <hr class="mt-0 d-md-none"> 
-                <span class="text-muted text-large">86 uah.</span>
-            </div>
-        </div>
-    </div>
-    
-
-
-
-    <!-- Garbage category -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <strong class="text-uppercase">Garbage</strong>
-        </div>
-        <div class="row">
-            <div class="col-md-9 col-lg-10">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <span class="align-middle">The amount of payment for this month</span>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-md-3 col-lg-2 h-100 my-auto pb-3 pb-md-0 text-center">
-                <hr class="mt-0 d-md-none"> 
-                <span class="text-muted text-large">106 uah.</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Internet category -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <strong class="text-uppercase">Internet</strong>
-        </div>
-        <div class="row">
-            <div class="col-md-9 col-lg-10">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <span class="align-middle">The amount of payment for this month</span>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-md-3 col-lg-2 h-100 my-auto pb-3 pb-md-0 text-center">
-                <hr class="mt-0 d-md-none"> 
-                <span class="text-muted text-large">186 uah.</span>
-            </div>
-        </div>
-    </div>
     <br>
-
+    <p>{{payments | json}}</p>
+    <br>
 
 </div>

@@ -1,0 +1,9 @@
+TO DO
+- Make calculation
+- Make validation fields for sum and counter
+- Push data for payment to a server
+
+DONE
+- Make link to previous and next working
+- Add curency symbol to payment
+- Make month and year select like a Shutterstock

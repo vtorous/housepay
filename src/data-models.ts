@@ -23,3 +23,8 @@ export class UserSettingsClass{
               firstValue: number,
             }) []
 }
+
+export class  YearMonth {
+    year: number;
+    month: number;
+}
