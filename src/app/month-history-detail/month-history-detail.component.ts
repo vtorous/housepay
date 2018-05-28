@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { Payment, PaymentByCounter, } from '../../month-payment';
+import { Payment, PaymentByCounter, } from '../../data-models';
 import { PaymentService } from '../payment.service';
 import { DatesService } from '../dates.service';
 
