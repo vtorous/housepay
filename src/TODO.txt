@@ -1,7 +1,11 @@
 TO DO
 - Make calculation
+- Disapble first previous and last next buttons
+- Adding empty second month if epsent
 - Make validation fields for sum and counter
 - Push data for payment to a server
+- Reset setting and create ready for realy use db
+- Clean up code
 
 DONE
 - Make link to previous and next working

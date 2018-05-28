@@ -35,11 +35,7 @@ export class PaymentComponent implements OnInit {
   currentYearMonthIndex: number = 1; 
   currentYearMonthString: string;
   
-  editedMonth;
-  editedYear; 
 
-  
-    
   constructor(private datesService: DatesService,
               private paymentService: PaymentService,
               private usersettingService: UsersettingsService,
@@ -47,10 +43,17 @@ export class PaymentComponent implements OnInit {
 
   getPayments(year: number, month:number): void {
     this.paymentService.getPaymentsYearMonth(year, month).subscribe(payments => this.payments = payments);
-
   } 
  
-  
+  getUserSettings(): void {
+    this.usersettingService.getUserSettings().subscribe(userSettings => {this.userSettings = userSettings;
+      console.log(this.userSettings);
+      this.getYearMonthList()
+    });
+  } 
+
+
+  // -------------------------------------------------------------------------------------------
   onYearMonthChange(): void {
     let temp = this.currentYearMonthString.split(" ")
     this.currentYearMonth.year = +temp[0];
@@ -58,7 +61,6 @@ export class PaymentComponent implements OnInit {
     console.log(this.currentYearMonth);
     this.getPayments(this.currentYearMonth.year, this.currentYearMonth.month);
     
-    // this.yearMonthList.forEach(function(element, index){
       for(let i=0; i<this.yearMonthList.length; i++){
       if (this.yearMonthList[i].year == this.currentYearMonth.year &&
           this.yearMonthList[i].month == this.currentYearMonth.month) {
@@ -66,11 +68,11 @@ export class PaymentComponent implements OnInit {
             break;
       }
     }
-    // this.currentYearMonthIndex = this.yearMonthList.indexOf(this.currentYearMonth);
+
     console.log(this.currentYearMonthIndex);
   }
   
-
+// -------------------------------------------------------------------------------------------
   goToPrevMonth(): void {
     if (this.currentYearMonthIndex < this.yearMonthList.length-1) {
       this.currentYearMonthIndex++
@@ -81,6 +83,7 @@ export class PaymentComponent implements OnInit {
     this.getPayments(this.currentYear, this.currentMonth);
   }
 
+// -------------------------------------------------------------------------------------------  
   goToNextMonth(): void {
     if (this.currentYearMonthIndex > 0) {
       this.currentYearMonthIndex--
@@ -91,7 +94,38 @@ export class PaymentComponent implements OnInit {
     this.getPayments(this.currentYear, this.currentMonth);
   }
   
+  
+  // -------------------------------------------------------------------------------------------
+  getPaymentById (id:number, payments: (Payment|PaymentByCounter)[]): (Payment|PaymentByCounter)   {
+    for (let i = 0; i < payments.length; i++) {
+      if (payments[i].id == id) {
+        return payments[i];
+      }
+    }
+    return null;
+  }
+  
+    // -------------------------------------------------------------------------------------------
+    getUserSettingByName (name: string): {}    {
+      console.log(this.userSettings);
+      for (let i = 0; i < this.userSettings[0].services.length; i++) {
+        if (this.userSettings[0].services[i].name == name)
+          console.log (this.userSettings[0].services[i]);
+      }
+      return null;
+    }
+  
+    // -------------------------------------------------------------------------------------------------------
+  calculateSum(id: number) {
+    let payment: (Payment|PaymentByCounter) = this.getPaymentById(id, this.payments);
+    console.log(payment);
+    console.log(id);
+    this.getUserSettingByName(payment.service);  
+    this.payments[0].sum = 6789.01
+  }
 
+
+  // ------------------------------------------------------------------------------------------- 
   getYearMonthList(){
     let currentYear = this.currentYear;
     let currentMonth = this.currentMonth;
@@ -133,43 +167,18 @@ export class PaymentComponent implements OnInit {
 
   }
 
+
+  // -------------------------------------------------------------------------------------------------------
   ngOnInit() {
     this.currentMonth = this.date.getMonth(); 
     this.currentYear = this.date.getFullYear();
 
-    this.editedMonth = this.currentMonth;
-    this.editedYear = this.currentYear;
-
     this.currentYearMonth.year = this.date.getFullYear();
     this.currentYearMonth.month = this.currentMonth = this.date.getMonth(); 
-
     
     this.getPayments(this.currentYear, this.currentMonth);
-    this.usersettingService.getUserSettings().subscribe(userSettings => {this.userSettings = userSettings;
-      console.log(this.userSettings);
-      this.getYearMonthList()
-    });
+    this.getUserSettings();
     
     this.curencyString = this.paymentService.getCurencyString();  
   }
-
-
-  // onYearChange(): void {
-  //   this.datesService.getMonthList(this.currentYear).subscribe(monthList => {this.monthList = monthList;
-  //     this.currentMonth = this.monthList[0];
-  //     this.getPayments(this.currentYear, this.currentMonth);
-  //   });
-  // }
-
-  // onMonthChange(): void {
-  //   this.currentMonth = this.monthNames.indexOf(this.currentMonth);
-  //   this.datesService.getMonthList(this.currentYear).subscribe(monthList => {this.monthList = monthList;
-  //     console.log(this.monthList);
-  //     console.log('This is month list in the payment component');
-  //   });
-  //   this.getPayments(this.currentYear, this.currentMonth);
-  //   console.log(this.currentYear + "---" + this.currentMonth);
-  // }
-
-
 }

@@ -155,7 +155,7 @@ export class InMemoryDataService implements InMemoryDbService {
       
       { id: 440, service: 'Electricity', year: 2018, month: 4, sum: null, paid: false, counterBeginMonth: 25456456, counterEndMonth: null},
       { id: 441, service: 'Gas', year: 2018, month: 4, sum: 1256.87, paid: true, counterBeginMonth: 25786786, counterEndMonth: 78678635},
-      { id: 432, service: 'Water', year: 2018, month: 4, sum: null, paid: false, counterBeginMonth: null, counterEndMonth: null},
+      { id: 442, service: 'Water', year: 2018, month: 4, sum: null, paid: false, counterBeginMonth: null, counterEndMonth: null},
       { id: 443, service: 'Rent', year: 2018, month: 4, sum: 485.54, paid: true},
       { id: 444, service: 'Garbage', year: 2018, month: 4, sum: 224.12, paid: true},
       { id: 445, service: 'Phone', year: 2018, month: 4, sum: 124.24, paid: true},

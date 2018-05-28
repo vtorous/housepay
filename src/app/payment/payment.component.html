@@ -41,12 +41,16 @@
                     <li *ngIf="payment.counterEndMonth !== undefined" class="list-group-item">
                         <span class="align-middle">This month meter value</span>
                         <span class="float-right">
-                            <input *ngIf="payment.counterEndMonth === null" type="text" class="counter_value form-control text-right">
+                            <input id="counterEndMonth-{{payment.id}}"
+                                   *ngIf="payment.counterEndMonth === null"
+                                   type="text"
+                                   class="counter_value form-control text-right"
+                                   required>
                             <span class="float-right">{{payment.counterEndMonth}}</span>
                         </span>
                     </li>
                     <li *ngIf="payment.counterEndMonth !== undefined && !payment.paid"  class="list-group-item text-md-right text-center">
-                        <span class=""><a href="#" class="btn btn-secondary">Calculate</a></span>
+                        <span class=""><a  (click)="calculateSum(payment.id)" class="btn btn-secondary">Calculate</a></span>
                     </li>
                 </ul>
             </div>
@@ -64,7 +68,7 @@
             <div class="col-md-3 col-lg-2 h-100 my-auto pb-3 pb-md-0 text-center">
                 <hr class="mt-0 d-md-none"> 
                 <span *ngIf="payment.sum" class="text-muted text-large mr-3 b-5"><strong>{{payment.sum}}</strong> {{curencyString}}</span>
-                <div *ngIf="!payment.sum" class="form-check form-check-inline mt-1">
+                <div *ngIf="!payment.sum || !payment.paid" class="form-check form-check-inline mt-1">
                     <input type="checkbox" class="form-check-input large-checkbox">
                     <button type="button" class="btn btn-secondary ml-1">&nbsp;Pay&nbsp;</button>
                 </div>
@@ -74,6 +78,7 @@
 
     <br>
     <p>{{payments | json}}</p>
+    <p>{{userSettings | json}}</p>
     <br>
 
 </div>

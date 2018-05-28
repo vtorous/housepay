@@ -28,7 +28,6 @@ export class HistoryComponent implements OnInit {
   currentMonth: number;
   currentYear: number; 
  
-
   constructor(private paymentService: PaymentService,
               private datesService: DatesService){
   }

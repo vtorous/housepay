@@ -17,11 +17,11 @@ export class UserSettingsClass{
         beginMonth: number;
         beginYear: number;
         services: 
-            ({ id: number;
+            { id: number;
               name: string;
               pricePerUnit: number,
               firstValue: number,
-            }) []
+            } []
 }
 
 export class  YearMonth {
