@@ -27,6 +27,8 @@ export class PaymentComponent implements OnInit {
   // yearsList: number[];
   // monthList: number[];
 
+  //TODO: check if this variablue used
+
   yearMonthList: YearMonth[] = []; 
   
   currentMonth;
@@ -50,7 +52,7 @@ export class PaymentComponent implements OnInit {
   } 
  
   // -------------------------------------------------------------------------------------------
-  //TODO  asd fasdfj afkj asfj afklj asldfkj asdlfkj
+  //TODO:  asd fasdfj afkj asfj afklj asldfkj asdlfkj
 
   getUserSettings(): void {
     this.usersettingService.getUserSettings().subscribe(userSettings => {this.userSettings = userSettings;
