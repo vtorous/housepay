@@ -69,11 +69,7 @@ export class DatesService {
     
       this.payments.forEach(function (element) {
         if (element.year == year && element.month == month) {
-          let obj = {
-            service: element.service,
-            sum: element.sum,
-          }
-          monthHistory.push(obj);
+          monthHistory.push({service: element.service, sum: element.sum});
         }
       });
 

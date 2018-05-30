@@ -1,10 +1,10 @@
 <div class="container bg-white">
     <div class="row">
         <div class="col pt-4 pb-1">
-            <h1 class="pageheader d-inline-block">History</h1>
+            <h1 class="pageheader d-inline-block">History&nbsp;</h1>
             <select (change)="onChange()"
                     [(ngModel)]="currentYear"
-                    class="form-control form-control-lg form-control-plaintext d-inline-block w-auto">
+                    class="form-control form-control-lg form-control d-inline-block w-auto">
                 <option *ngFor="let year of yearsList"
                     [selected]="year == currentYear">{{year}}</option>
             </select>

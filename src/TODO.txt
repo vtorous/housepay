@@ -1,11 +1,12 @@
 TO DO
-- Change Calculate button to Change
-- Make validation fields for sum and counter
 - Adding empty second month if epsent
 - Reset setting and create ready for realy use db
 - Select YearMonth as ComboBox (autocomplite)
 
 DONE
+- Buttons in the last month disabled
+- Make validation fields for sum and counter
+- Change Calculate button to Change
 - Add counterMetter for next month
 - If coutner data epsent write about it
 - Sort unpaid first

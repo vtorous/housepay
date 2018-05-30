@@ -30,9 +30,12 @@ export class MonthHistoryDetailComponent implements OnInit {
     let sum = 0;
     this.paymentService.getPaymentsYearMonth(year, month).subscribe(payments => {
       this.payments = payments;
-      for (let index = 0; index < this.payments.length; index++) {
-        this.totalMonthSum += this.payments[index].sum;
-      }
+
+      payments.forEach(element => {
+        if (element.sum)
+          this.totalMonthSum += element.sum;
+      });
+
     });
   }
 

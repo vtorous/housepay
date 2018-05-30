@@ -29,6 +29,8 @@ export class PaymentComponent implements OnInit {
   private currentMonth;
   private currentYear;
 
+  private lockCheckBoxes: boolean[] = [];
+
   private isFirstPage: boolean;
   private isLastPage: boolean;
   
@@ -57,7 +59,6 @@ export class PaymentComponent implements OnInit {
 
     this.paymentService.getPaymentsYearMonth(year, month).subscribe(nextMonthPayment => {
       this.nextMonthPayment = nextMonthPayment;
-      console.log(this.nextMonthPayment);
     });
 
   } 
@@ -152,18 +153,21 @@ export class PaymentComponent implements OnInit {
   private updatePayment(id: number) {
     const payment: (PaymentByCounter) = this.getPaymentById(id, this.payments);
     const nextMonthPayment: (PaymentByCounter) = this.getPaymentByName(payment.service, this.nextMonthPayment);
-    console.log (nextMonthPayment);
-    payment.paid = true;
-    nextMonthPayment.counterBeginMonth = payment.counterEndMonth;
 
-    this.paymentService.updatePayment(payment).subscribe();
-    this.paymentService.updatePayment(nextMonthPayment).subscribe();
+    if (payment.counterEndMonth < payment.counterBeginMonth) {
+      alert("Counter values at the end of the month should be equal or greater");
+    } else {
+
+      payment.paid = true;
+      nextMonthPayment.counterBeginMonth = payment.counterEndMonth;
+      this.paymentService.updatePayment(payment).subscribe();
+      this.paymentService.updatePayment(nextMonthPayment).subscribe();
+    }
   }
 
 
   // -------------------------------------------------------------------------------------------
   private getUserSettingByName(name: string): UserSettingSerivice {
-    console.log(this.userSettings);
     for (let i = 0; i < this.userSettings[0].services.length; i++) {
       if (this.userSettings[0].services[i].name == name)
         return this.userSettings[0].services[i];
@@ -175,17 +179,16 @@ export class PaymentComponent implements OnInit {
     let payment: any = this.getPaymentById(id, this.payments);
 
     const setting = this.getUserSettingByName(payment.service);
-    this.payments[0].sum = (payment.counterEndMonth - payment.counterBeginMonth) * setting.pricePerUnit;
+    payment.sum = (payment.counterEndMonth - payment.counterBeginMonth) * setting.pricePerUnit;
+    
   }
   
   // -------------------------------------------------------------------------------------------------------
   private resetCounter(id: number) {
     let payment: any = this.getPaymentById(id, this.payments);
     payment.counterEndMonth = null;
-    payment.sum = 0;
-
+    payment.sum = undefined;
   }
-
 
   // ------------------------------------------------------------------------------------------- 
   private getYearMonthList(): YearMonth[] {

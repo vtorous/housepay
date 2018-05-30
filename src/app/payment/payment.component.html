@@ -69,23 +69,24 @@
                     <li *ngIf="payment.counterEndMonth !== undefined" class="list-group-item">
                         <span class="align-middle">This month meter value</span>
                         <div class="float-right">
-                            <input name="counterEndMonth-{{payment.id}}"
+                            <input type="number"
                                    [(ngModel)]="payment.counterEndMonth"
                                    [ngModelOptions]="{updateOn: 'blur'}"
                                    *ngIf="payment.counterEndMonth === null"
                                    class="counter_value form-control text-right"
+                                   (blur)="calculateSum(payment.id)"
+                                   [disabled] = "currentYearMonthIndex == 0"
                                    required>
                             <span class="float-right">{{payment.counterEndMonth}}</span>
                         </div>
                     </li>
-                    <li class="list-group-item text-md-right text-center">
-                        <a *ngIf="payment.counterBeginMonth && !payment.paid" (click)="calculateSum(payment.id)" class="btn btn-secondary">Calculate</a>
-                        <!-- <a *ngIf="payment.counterBeginMonth && payment.sum == 0" (click)="resetCounter(payment.id)" class="btn btn-secondary">Reset</a> -->
+                    <li *ngIf="!payment.paid" class="list-group-item text-md-right text-center">
+                        <button [disabled] = "currentYearMonthIndex == 0"
+                                *ngIf="payment.counterBeginMonth && !payment.paid && payment.sum == undefined"
+                                (click)="calculateSum(payment.id)"
+                                class="btn btn-secondary">Calculate</button>
+                        <button [disabled] = "currentYearMonthIndex == 0" *ngIf="payment.counterEndMonth && payment.sum != undefined && !payment.paid " (click)="resetCounter(payment.id)" class="btn btn-secondary">Reset</button>
                     </li>
-
-                    <!-- <li *ngIf="payment.counterBeginMonth && payment.sum != 0"  class="list-group-item text-md-right text-center">
-                        <span class=""><a  (click)="resetCounter(payment.id)" class="btn btn-secondary">Reset</a></span>
-                    </li> -->
 
                 </ul>
             </div>
@@ -95,27 +96,33 @@
                     <li class="list-group-item">
                         <span class="align-middle">Month payment</span>
                         <span class="float-right">
-                            <input  [(ngModel)]="payment.sum"
-                                    [ngModelOptions]="{updateOn: 'blur'}"
-                                    *ngIf="!payment.paid"
-                                    type="text"
-                                    class="form-control text-right">
+                            <input [(ngModel)]="payment.sum"
+                                   [ngModelOptions]="{updateOn: 'blur'}"
+                                   *ngIf="!payment.paid"
+                                   type="number"
+                                   class="form-control text-right">
                         </span>
                     </li>
                 </ul>
             </div>          
             <div class="col-md-3 col-lg-2 h-100 my-auto pb-3 pb-md-0 text-center">
                 <hr class="mt-0 d-md-none"> 
-                <span *ngIf="payment.sum"
+                <span *ngIf="payment.sum != undefined"
                        class="text-muted text-large mr-3 b-5">
                        <strong>{{payment.sum}}</strong> {{curencyString}}
                 </span>
                 <div *ngIf="!payment.sum || !payment.paid" class="form-check form-check-inline mt-1">
-                    <input type="checkbox" class="form-check-input large-checkbox">
-                    <button (click)="updatePayment(payment.id)" type="button" class="btn btn-secondary ml-1">&nbsp;Pay&nbsp;</button>
+                    <input type="checkbox"
+                           class="form-check-input large-checkbox"
+                           [disabled] = "currentYearMonthIndex == 0"
+                           [(ngModel)]="lockCheckBoxes[payment.id]">
+                           
+                    <button [disabled]="!lockCheckBoxes[payment.id]"
+                            (click)="updatePayment(payment.id)"
+                            type="button"
+                            class="btn btn-secondary ml-1">&nbsp;Pay&nbsp;</button>
                 </div>
             </div>
-            {{ payment | json}}
         </div>
     </div>
     <br>
