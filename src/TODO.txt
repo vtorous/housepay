@@ -1,12 +1,12 @@
 TO DO
 - Make validation fields for sum and counter
-- Push data for payment to a server
 - Adding empty second month if epsent
 - Reset setting and create ready for realy use db
-- Clean up code
 - Select YearMonth as ComboBox (autocomplite)
 
 DONE
+- Sort unpaid first
+- Push data for payment to a server
 - Rewrite getYearMonth function
 - Dublicate Save Button
 - Put text with YearMonth to prev and text button

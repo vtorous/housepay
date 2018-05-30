@@ -12,25 +12,38 @@
         <div class="col-md">
             <button (click)="goToPrevMonth()"
                     type="button"
-                    [disabled] = "lastMonthInWiev"
+                    [disabled] = "isLastPage"
                     class="btn btn-active mt-1 prev_next_month"> &larr; Previous
                 </button>
         </div>
         <div class="col-md text-md-center">
+
+                <!-- <form>
+                        <input type="text" name="search" placeholder="Поиск" list="search"><br><br>
+                        <datalist id="search">
+                          <option value="Васька" />
+                          <option value="Мурзик" />
+                          <option value="Рыжик" />
+                          <option value="Барсик" />
+                        </datalist> 
+                </form> -->
+
             <select
                 (change)="onYearMonthChange()"
                 [(ngModel)]="currentYearMonthString"
                 class="form-control form-control-lg form-control-plaintext d-inline-block w-auto">
                 <option *ngFor="let yearMonth of yearMonthList  let i=index"
-                        [selected]="yearMonth.year == this.currentYear && yearMonth.month == this.currentMonth">{{yearMonth.year}} {{yearMonth.month | month}} </option>
+                        [selected]="yearMonth.year == this.currentYear && yearMonth.month == this.currentMonth">{{yearMonth.year}} {{yearMonth.month | month}}
+                </option>
             </select>
          </div>
 
         <div class="col-md text-md-right">
             <button (click)="goToNextMonth()"
-                    [disabled] = "firstMonthInWiev"
+                    [disabled] = "isFirstPage"
                     type="button"
-                    class="btn btn-active mt-1 prev_next_month">Next &rarr;</button>
+                    class="btn btn-active mt-1 prev_next_month">Next &rarr;
+            </button>
         </div>
     </div>
 
@@ -86,15 +99,13 @@
                 </span>
                 <div *ngIf="!payment.sum || !payment.paid" class="form-check form-check-inline mt-1">
                     <input type="checkbox" class="form-check-input large-checkbox">
-                    <button type="button" class="btn btn-secondary ml-1">&nbsp;Pay&nbsp;</button>
+                    <button (click)="updatePayment(payment.id)" type="button" class="btn btn-secondary ml-1">&nbsp;Pay&nbsp;</button>
                 </div>
             </div>
         </div>
     </div>
 
     <br>
-    <p>{{payments | json}}</p>
-    <p>{{userSettings | json}}</p>
     <br>
 
 </div>

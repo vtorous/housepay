@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { UsersettingsService } from '../usersettings.service';
@@ -13,30 +13,25 @@ import { UserSettingsClass } from '../../data-models';
   providers: [ UsersettingsService, DatesService, PaymentService],
 })
 
-export class UsersettingsComponent implements OnInit, OnChanges  {
+export class UsersettingsComponent implements OnInit  {
   
   userSettings: UserSettingsClass[];
   userSettingForm: FormGroup;
-  
-  currentMonth: number;
-  currentYear: number;
+
   previousYearsList: number[] = [];
-  date: Date = new Date();
 
   minServiceNameLenth: number = 2;
   maxServiceNameLenth: number = 20;
   pricePerUnitValidationPattern: string = '[0-9]+(\.[0-9][0-9]?)?';
   firstValueValidationPattern: string = '[0-9]+';
 
-
   constructor(private usersettingService: UsersettingsService,
               private datesService: DatesService,
               private fb: FormBuilder) {
-
     this.createForm();
-    // console.log(this.userSettingForm);
   }
-
+  
+  // -------------------------------------------------------------------------
   createForm() {
     this.userSettingForm = this.fb.group({
       id: 0,
@@ -47,12 +42,6 @@ export class UsersettingsComponent implements OnInit, OnChanges  {
   }
 
   // -------------------------------------------------------------------------
-  ngOnChanges() {
-    console.log("ngOnChange is running");
-    // this.rebuildForm();
-  }
-
-  // -------------------------------------------------------------------------
   rebuildForm() {
     this.userSettingForm.reset({
       id: 0,
@@ -60,15 +49,8 @@ export class UsersettingsComponent implements OnInit, OnChanges  {
       beginYear: this.userSettings[0].beginYear,
     });
     this.setServices(this.userSettings[0].services);
-    console.log(this.userSettingForm);
   }
 
-  // //--------------------------------------------------------------------------
-  
-  // get services(): FormArray {
-  //   return this.userSettingForm.get('services') as FormArray;
-  // };
-  
   // -------------------------------------------------------------------------
   setServices(services: {}[]) {
     for(let i = 0; i < services.length; i++) {
@@ -98,17 +80,11 @@ export class UsersettingsComponent implements OnInit, OnChanges  {
 
   // -------------------------------------------------------------------------
   ngOnInit() {
-
     this.usersettingService.getUserSettings().subscribe(userSettings => {this.userSettings = userSettings;
         this.rebuildForm();
-        console.log(this.userSettings);
       });
 
-    this.currentMonth = this.date.getMonth();
-    this.currentYear = this.date.getFullYear();
     this.previousYearsList = this.getPreviousYearsList(4);
-
-
   }
 
   // -------------------------------------------------------------------------
@@ -117,7 +93,6 @@ export class UsersettingsComponent implements OnInit, OnChanges  {
       this.usersettingService.updateUserSetting(
         this.userSettingForm.value
       ).subscribe();
-      console.log(this.userSettingForm);
     } else {
       alert("There are incorect fields in the form. Please check form carefully.")
     }
@@ -125,14 +100,10 @@ export class UsersettingsComponent implements OnInit, OnChanges  {
 
   // -------------------------------------------------------------------------
   getPreviousYearsList(n: number) {
-    let tempArray: number[] = [];
-    for (let i = 0; i < n; i++ ) {
-      tempArray[i] = this.currentYear - i;
-    }
-    // console.log(tempArray);
-    return tempArray;
+    return Array(n).fill(0).map((v, i) => new Date().getFullYear() - i);
   }
 
+  // -------------------------------------------------------------------------
   trackByFn(index, item) {
     return item.id;
   }

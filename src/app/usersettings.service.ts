@@ -18,7 +18,7 @@ export class UsersettingsService {
   
   constructor(private http: HttpClient) { }
 
-
+// --------------------------------------------------------------------------------------------
   getUserSettings(): Observable<UserSettingsClass[]> {
     return this.http.get<any>(this.userSettingUrl)
       .pipe(
@@ -26,14 +26,14 @@ export class UsersettingsService {
     );
   }
 
-  
+  // --------------------------------------------------------------------------------------------
   updateUserSetting (setting: UserSettingsClass): Observable<any> {
-    console.log(setting);
-    return this.http.post(this.userSettingUrl, setting, httpOptions).pipe(
-      tap(_ => console.log(`updated setting id=${setting.id}`)),
+        return this.http.post(this.userSettingUrl, setting, httpOptions).pipe(
+      // tap(_ => console.log(`updated setting id=${setting.id}`)),
       catchError(this.handleError<any>('updateUserSetting'))
     );
   }
+
 
   /**
  * Handle Http operation that failed.
@@ -43,9 +43,7 @@ export class UsersettingsService {
  */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
-      // Let the app keep running by returning an empty result.
       return of(result as T);
     };
   }
