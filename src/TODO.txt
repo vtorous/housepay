@@ -1,10 +1,13 @@
 TO DO
+- Change Calculate button to Change
 - Make validation fields for sum and counter
 - Adding empty second month if epsent
 - Reset setting and create ready for realy use db
 - Select YearMonth as ComboBox (autocomplite)
 
 DONE
+- Add counterMetter for next month
+- If coutner data epsent write about it
 - Sort unpaid first
 - Push data for payment to a server
 - Rewrite getYearMonth function

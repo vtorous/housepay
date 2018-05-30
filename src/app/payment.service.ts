@@ -19,8 +19,8 @@ export class PaymentService {
   constructor(private http: HttpClient) { }
 
   // --------------------------------------------------------------------------------------------
-  getPayments(): Observable<(Payment | PaymentByCounter)[]> {
-    return this.http.get<(Payment | PaymentByCounter)[]>(this.paymentsUrl)
+  getPayments(): Observable<(PaymentByCounter)[]> {
+    return this.http.get<(PaymentByCounter)[]>(this.paymentsUrl)
       .pipe(
         // tap(payments => console.log(`payment data fetched...${payments}`)),
         catchError(this.handleError('getPayments', []))
@@ -28,9 +28,9 @@ export class PaymentService {
   }
 
   // --------------------------------------------------------------------------------------------
-  getPaymentsYear(year: number): Observable<(Payment | PaymentByCounter)[]> {
+  getPaymentsYear(year: number): Observable<(PaymentByCounter)[]> {
     const url = `${this.paymentsUrl}/?year=${year}`;
-    return this.http.get<(Payment | PaymentByCounter)[]>(url)
+    return this.http.get<(PaymentByCounter)[]>(url)
       .pipe(
         // tap(payments => console.log(`payment data fetched...${payments}`)),
         catchError(this.handleError('getPaymentsYear', []))
@@ -38,9 +38,9 @@ export class PaymentService {
   }
 
   // --------------------------------------------------------------------------------------------
-  getPaymentsYearMonth(year: number, month: number): Observable<(Payment | PaymentByCounter)[]> {
+  getPaymentsYearMonth(year: number, month: number): Observable<(PaymentByCounter)[]> {
     const url = `${this.paymentsUrl}/?year=${year}\&month=^${month}$`;
-    return this.http.get<(Payment | PaymentByCounter)[]>(url)
+    return this.http.get<(PaymentByCounter)[]>(url)
       .pipe(
         // tap(payments => console.log(`payment data fetched...${payments}`)),
         catchError(this.handleError('getPaymentsYear', []))
@@ -48,7 +48,7 @@ export class PaymentService {
   }
 
   // --------------------------------------------------------------------------------------------
-  updatePayment(payment: (Payment | PaymentByCounter)): Observable<any> {
+  updatePayment(payment: (PaymentByCounter)): Observable<any> {
     const url = `${this.paymentsUrl}/?id=${payment.id}`;
     console.log(url);
     return this.http.post(url, payment, httpOptions).pipe(

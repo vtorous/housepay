@@ -14,7 +14,7 @@
                     type="button"
                     [disabled] = "isLastPage"
                     class="btn btn-active mt-1 prev_next_month"> &larr; Previous
-                </button>
+            </button>
         </div>
         <div class="col-md text-md-center">
 
@@ -56,11 +56,19 @@
                 <ul class="list-group list-group-flush">
                     <li *ngIf="payment.counterBeginMonth !== undefined" class="list-group-item">
                         <span class="float-left">Previous month meter value</span>
-                        <span class="float-right">{{payment.counterBeginMonth}}</span>
+                        <span *ngIf="payment.counterBeginMonth !== null" class="float-right">{{payment.counterBeginMonth}}</span>
+                        <span *ngIf="payment.counterBeginMonth === null" class="float-right">
+                            <button (click)="goToPrevMonth()"
+                                type="button"
+                                [disabled] = "isLastPage"
+                                class="btn btn-active mt-1"> &larr; Add data to previous month
+                            </button>
+
+                        </span>
                     </li>
                     <li *ngIf="payment.counterEndMonth !== undefined" class="list-group-item">
                         <span class="align-middle">This month meter value</span>
-                        <span class="float-right">
+                        <div class="float-right">
                             <input name="counterEndMonth-{{payment.id}}"
                                    [(ngModel)]="payment.counterEndMonth"
                                    [ngModelOptions]="{updateOn: 'blur'}"
@@ -68,11 +76,17 @@
                                    class="counter_value form-control text-right"
                                    required>
                             <span class="float-right">{{payment.counterEndMonth}}</span>
-                        </span>
+                        </div>
                     </li>
-                    <li *ngIf="payment.counterEndMonth !== undefined && !payment.paid"  class="list-group-item text-md-right text-center">
-                        <span class=""><a  (click)="calculateSum(payment.id)" class="btn btn-secondary">Calculate</a></span>
+                    <li class="list-group-item text-md-right text-center">
+                        <a *ngIf="payment.counterBeginMonth && !payment.paid" (click)="calculateSum(payment.id)" class="btn btn-secondary">Calculate</a>
+                        <!-- <a *ngIf="payment.counterBeginMonth && payment.sum == 0" (click)="resetCounter(payment.id)" class="btn btn-secondary">Reset</a> -->
                     </li>
+
+                    <!-- <li *ngIf="payment.counterBeginMonth && payment.sum != 0"  class="list-group-item text-md-right text-center">
+                        <span class=""><a  (click)="resetCounter(payment.id)" class="btn btn-secondary">Reset</a></span>
+                    </li> -->
+
                 </ul>
             </div>
 
@@ -81,8 +95,7 @@
                     <li class="list-group-item">
                         <span class="align-middle">Month payment</span>
                         <span class="float-right">
-                            <input 
-                                    [(ngModel)]="payment.sum"
+                            <input  [(ngModel)]="payment.sum"
                                     [ngModelOptions]="{updateOn: 'blur'}"
                                     *ngIf="!payment.paid"
                                     type="text"
@@ -102,10 +115,10 @@
                     <button (click)="updatePayment(payment.id)" type="button" class="btn btn-secondary ml-1">&nbsp;Pay&nbsp;</button>
                 </div>
             </div>
+            {{ payment | json}}
         </div>
     </div>
-
     <br>
     <br>
-
+    
 </div>

@@ -144,27 +144,27 @@ export class InMemoryDataService implements InMemoryDbService {
   
       { id: 430, service: 'Electricity', year: 2018, month: 3, sum: 125, paid: true, counterBeginMonth: 25456456, counterEndMonth: 37867865},
       { id: 431, service: 'Gas', year: 2018, month: 3, sum: 125, paid: true, counterBeginMonth: 24564565, counterEndMonth: 78678635},
-      { id: 432, service: 'Water', year: 2018, month: 3, sum: null, paid: false, counterBeginMonth: null, counterEndMonth: null},
+      { id: 432, service: 'Water', year: 2018, month: 3, sum: undefined, paid: false, counterBeginMonth: 3787865, counterEndMonth: null},
       { id: 433, service: 'Rent', year: 2018, month: 3, sum: 125, paid: true},
       { id: 434, service: 'Garbage', year: 2018, month: 3, sum: 125, paid: true},
       { id: 435, service: 'Phone', year: 2018, month: 3, sum: 125, paid: true},
       { id: 436, service: 'Internet', year: 2018, month: 3, sum: 125, paid: true},
       
-      { id: 440, service: 'Electricity', year: 2018, month: 4, sum: null, paid: false, counterBeginMonth: 25456456, counterEndMonth: null},
+      { id: 440, service: 'Electricity', year: 2018, month: 4, sum: undefined, paid: false, counterBeginMonth: 25456456, counterEndMonth: null},
       { id: 441, service: 'Gas', year: 2018, month: 4, sum: 1256.87, paid: true, counterBeginMonth: 25786786, counterEndMonth: 78678635},
-      { id: 442, service: 'Water', year: 2018, month: 4, sum: null, paid: false, counterBeginMonth: null, counterEndMonth: null},
+      { id: 442, service: 'Water', year: 2018, month: 4, sum: undefined, paid: false, counterBeginMonth: null, counterEndMonth: null},
       { id: 443, service: 'Rent', year: 2018, month: 4, sum: 485.54, paid: true},
       { id: 444, service: 'Garbage', year: 2018, month: 4, sum: 224.12, paid: true},
       { id: 445, service: 'Phone', year: 2018, month: 4, sum: 124.24, paid: true},
-      { id: 446, service: 'Internet', year: 2018, month: 4, sum: null, paid: false},
+      { id: 446, service: 'Internet', year: 2018, month: 4, sum: undefined, paid: false},
   
-      { id: 450, service: 'Electricity', year: 2018, month: 5, sum: null, paid: false, counterBeginMonth: null, counterEndMonth: null},
-      { id: 451, service: 'Gas', year: 2018, month: 5, sum: null, paid: false, counterBeginMonth: 54343525, counterEndMonth: null},
-      { id: 452, service: 'Water', year: 2018, month: 5, sum: null, paid: false, counterBeginMonth: 43434525, counterEndMonth: null},
-      { id: 453, service: 'Rent', year: 2018, month: 5, sum: null, paid: false},
-      { id: 454, service: 'Garbage', year: 2018, month: 5, sum: null, paid: false},
-      { id: 455, service: 'Phone', year: 2018, month: 5, sum: null, paid: false},
-      { id: 456, service: 'Internet', year: 2018, month: 5, sum: null, paid: false},
+      { id: 450, service: 'Electricity', year: 2018, month: 5, sum: undefined, paid: false, counterBeginMonth: null, counterEndMonth: null},
+      { id: 451, service: 'Gas', year: 2018, month: 5, sum: undefined, paid: false, counterBeginMonth: 54343525, counterEndMonth: null},
+      { id: 452, service: 'Water', year: 2018, month: 5, sum: undefined, paid: false, counterBeginMonth: 43434525, counterEndMonth: null},
+      { id: 453, service: 'Rent', year: 2018, month: 5, sum: undefined, paid: false},
+      { id: 454, service: 'Garbage', year: 2018, month: 5, sum: undefined, paid: false},
+      { id: 455, service: 'Phone', year: 2018, month: 5, sum: undefined, paid: false},
+      { id: 456, service: 'Internet', year: 2018, month: 5, sum: undefined, paid: false},
   
     ];
 
