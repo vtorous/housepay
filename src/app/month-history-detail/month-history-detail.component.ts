@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { Payment, PaymentByCounter, } from '../../data-models';
-import { PaymentService } from '../payment.service';
-import { DatesService } from '../dates.service';
+import { Payment, PaymentByCounter, } from '../data-models';
+import { PaymentService } from '../services/payment.service';
+import { DatesService } from '../services/dates.service';
 
 @Component({
   selector: 'app-month-history-detail',

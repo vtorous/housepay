@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { DatesService } from '../dates.service';
-import { PaymentService } from '../payment.service';
-import { Payment, PaymentByCounter, UserSettingsClass,  UserSettingSerivice, YearMonth, } from '../../data-models';
-import { UsersettingsService } from '../usersettings.service';
+import { DatesService } from '../services/dates.service';
+import { PaymentService } from '../services/payment.service';
+import { Payment, PaymentByCounter, UserSettingsClass,  UserSettingSerivice, YearMonth, } from '../data-models';
+import { UsersettingsService } from '../services/usersettings.service';
 
 
 @Component({
@@ -179,7 +179,12 @@ export class PaymentComponent implements OnInit {
     let payment: any = this.getPaymentById(id, this.payments);
 
     const setting = this.getUserSettingByName(payment.service);
-    payment.sum = (payment.counterEndMonth - payment.counterBeginMonth) * setting.pricePerUnit;
+    if (payment.counterEndMonth > payment.counterBeginMonth) {
+      payment.sum = (payment.counterEndMonth - payment.counterBeginMonth) * setting.pricePerUnit;
+    } else {
+     
+    }
+
     
   }
   

@@ -34,7 +34,6 @@ export class UsersettingsService {
     );
   }
 
-
   /**
  * Handle Http operation that failed.
  * Let the app continue.

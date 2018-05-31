@@ -1,0 +1,19 @@
+input.ng-touched.ng-invalid{
+    border-color: red;
+}
+
+input.ng-touched.ng-invalid + .error {
+    display: block;
+    position: relative;
+    opacity: 1;
+}
+
+.error {
+     font-size: 90%;
+    color: red;
+    opacity: 0;
+    height: 0px;
+    margin: 0;
+    position: absolute;
+    transition: all 1s ease;
+}

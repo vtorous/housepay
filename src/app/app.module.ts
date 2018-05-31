@@ -14,12 +14,12 @@ import { HistoryComponent } from './history/history.component';
 import { UsersettingsComponent } from './usersettings/usersettings.component';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService }  from './in-memory-data.service';
+import { InMemoryDataService }  from './services/in-memory-data.service';
 
-import { MonthPipe } from '../pipes/month';
+import { MonthPipe } from './pipes/month';
 import { MonthHistoryDetailComponent } from './month-history-detail/month-history-detail.component';
 
-import { PaymentService } from './payment.service';
+import { PaymentService } from './services/payment.service';
 
 @NgModule({
   declarations: [

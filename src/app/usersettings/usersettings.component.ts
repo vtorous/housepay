@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { UsersettingsService } from '../usersettings.service';
-import { DatesService } from '../dates.service';
-import { PaymentService } from '../payment.service';
-import { UserSettingsClass } from '../../data-models';
+import { UsersettingsService } from '../services/usersettings.service';
+import { DatesService } from '../services/dates.service';
+import { PaymentService } from '../services/payment.service';
+import { UserSettingsClass } from '../data-models';
 
 @Component({
   selector: 'app-usersettings',

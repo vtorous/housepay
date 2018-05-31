@@ -18,16 +18,6 @@
         </div>
         <div class="col-md text-md-center">
 
-                <!-- <form>
-                        <input type="text" name="search" placeholder="Поиск" list="search"><br><br>
-                        <datalist id="search">
-                          <option value="Васька" />
-                          <option value="Мурзик" />
-                          <option value="Рыжик" />
-                          <option value="Барсик" />
-                        </datalist> 
-                </form> -->
-
             <select
                 (change)="onYearMonthChange()"
                 [(ngModel)]="currentYearMonthString"
@@ -54,7 +44,7 @@
         <div class="row">
             <div class="col-md-9 col-lg-10">
                 <ul class="list-group list-group-flush">
-                    <li *ngIf="payment.counterBeginMonth !== undefined" class="list-group-item">
+                    <li *ngIf="payment.counterBeginMonth != undefined" class="list-group-item">
                         <span class="float-left">Previous month meter value</span>
                         <span *ngIf="payment.counterBeginMonth !== null" class="float-right">{{payment.counterBeginMonth}}</span>
                         <span *ngIf="payment.counterBeginMonth === null" class="float-right">
@@ -66,18 +56,19 @@
 
                         </span>
                     </li>
-                    <li *ngIf="payment.counterEndMonth !== undefined" class="list-group-item">
+                    <li class="list-group-item">
                         <span class="align-middle">This month meter value</span>
                         <div class="float-right">
-                            <input type="number"
+                            <input type="number" size="25"
+                                   *ngIf="payment.counterBeginMonth != undefined && !payment.paid "
                                    [(ngModel)]="payment.counterEndMonth"
                                    [ngModelOptions]="{updateOn: 'blur'}"
-                                   *ngIf="payment.counterEndMonth === null"
                                    class="counter_value form-control text-right"
                                    (blur)="calculateSum(payment.id)"
                                    [disabled] = "currentYearMonthIndex == 0"
                                    required>
-                            <span class="float-right">{{payment.counterEndMonth}}</span>
+                            <span  *ngIf="payment.paid"
+                                   class="float-right">{{payment.counterEndMonth}}</span>
                         </div>
                     </li>
                     <li *ngIf="!payment.paid" class="list-group-item text-md-right text-center">
@@ -85,7 +76,9 @@
                                 *ngIf="payment.counterBeginMonth && !payment.paid && payment.sum == undefined"
                                 (click)="calculateSum(payment.id)"
                                 class="btn btn-secondary">Calculate</button>
-                        <button [disabled] = "currentYearMonthIndex == 0" *ngIf="payment.counterEndMonth && payment.sum != undefined && !payment.paid " (click)="resetCounter(payment.id)" class="btn btn-secondary">Reset</button>
+                        <button [disabled] = "currentYearMonthIndex == 0"
+                                *ngIf="payment.counterEndMonth && payment.sum != undefined && !payment.paid"
+                                (click)="resetCounter(payment.id)" class="btn btn-secondary">Reset</button>
                     </li>
 
                 </ul>

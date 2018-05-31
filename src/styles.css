@@ -1,14 +1,8 @@
-body {
-    background-color: red;
-}
-h1.pageheader {
+.pageheader {
     font-weight: normal;
     font-size: 1.5em;
 }
 
-#main-container {
-    background: #fff;
-}
 .container{
     box-shadow: 0 3px 15px lightgray;
 }
@@ -19,51 +13,4 @@ h1.pageheader {
 
 .text-large {
     font-size: 125%;
-}
-
-.large-checkbox {
-    width: 25px;
-    height: 25px;
-}
-
-
-.month-stats .list-group-item {
-    padding: 0.45rem 1.25rem;
-}
-
-.unpaid { 
-    background-color: rgb(45, 109, 168);
-}
-
-.paid {
-    background-color: darkgray;
-}
-
-.counter_value {
-    width: 6em;
-}
-
-.prev_next_month {
-    width: 11em;
-}
-
-input.ng-touched.ng-invalid{
-    border-color: red;
-}
-
-input.ng-touched.ng-invalid + div.error {
-    display: block;
-    position: relative;
-    opacity: 1;
-}
-
-div.error {
-    /* border: 1px solid red; */
-    font-size: 90%;
-    color: red;
-    opacity: 0;
-    height: 0px;
-    margin: 0;
-    position: absolute;
-    transition: all 1s ease;
 }

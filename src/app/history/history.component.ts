@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../app.component';
 
-import { Payment, PaymentByCounter, } from '../../data-models';
-import { PaymentService } from '../payment.service';
-import { DatesService } from '../dates.service';
+import { Payment, PaymentByCounter, } from '../data-models';
+import { PaymentService } from '../services/payment.service';
+import { DatesService } from '../services/dates.service';
 import { Observable, of } from 'rxjs';
 
 

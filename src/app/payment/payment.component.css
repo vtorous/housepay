@@ -1,0 +1,20 @@
+.paid {
+    background-color: darkgray;
+}
+
+.unpaid { 
+    background-color: rgb(45, 109, 168);
+}
+
+.counter_value {
+    width: 8em;
+}
+
+.prev_next_month {
+    width: 11em;
+}
+
+.large-checkbox {
+    width: 25px;
+    height: 25px;
+}
